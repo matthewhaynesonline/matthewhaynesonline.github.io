@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 body {
   min-height: 100vh;
@@ -52,12 +52,83 @@ h6 {
   opacity: 0.5;
 }
 
+.header-wrapper {
+  background-color: #000;
+}
+
 .header {
   font-family: $font-family-serif;
+
+  a {
+    color: $body-bg;
+  }
 }
 
 .footer {
   font-size: 1.2rem;
+}
+
+// in page nav
+.in-page-nav-wrapper {
+  position: sticky;
+  top: 5rem;
+  right: 0;
+  z-index: 2;
+  height: calc(100vh - 7rem);
+  overflow-y: auto;
+}
+
+/* --- In-Page Nav Component Styling --- */
+.nav-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.in-page-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 2px solid #e2e2e6;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+/* Indent based on heading level */
+.nav-item.level-3 {
+  padding-left: 1rem;
+}
+.nav-item.level-4 {
+  padding-left: 2rem;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #565c65;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin-left: -2px; /* Pull left to overlap the list border */
+  border-left: 2px solid transparent;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.nav-link:hover {
+  color: #005ea2;
+  background-color: #f0f0f0;
+}
+
+/* Active State */
+.nav-link.active {
+  color: #005ea2;
+  font-weight: bold;
+  border-left-color: #005ea2; /* Highlighted vertical bar */
 }
 
 .home {
@@ -67,11 +138,17 @@ h6 {
 
   .heading {
     font-size: 10vw;
+    max-width: 50vw;
   }
 
   .sub-heading {
-    color: $red-700;
-    opacity: 0.5;
+    color: #9f9898;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .home .heading {
+    font-size: 5rem;
   }
 }
 

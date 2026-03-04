@@ -1,12 +1,14 @@
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
-title: "Matthew Haynes" # the name of your site, e.g. ACME Corp.
+title: "Matthew Haynes's Blog" # the name of your site, e.g. ACME Corp.
+author:
+  name: "Matthew Haynes"
 exclude:
   - "README.md"
   - "**/README.md"
 kramdown:
   auto_ids: true
-
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
   # - github-pages
