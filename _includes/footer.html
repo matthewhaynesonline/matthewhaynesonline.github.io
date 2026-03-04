@@ -1,0 +1,39 @@
+<div class="container footer mt-5 pb-3">
+  <ul class="list-inline text-end">
+    <li class="list-inline-item">
+      <a href="/posts">Posts</a>
+    </li>
+    <li class="list-inline-item">
+      <a href="/feed.xml">Feed</a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://github.com/matthewhaynesonline">GitHub</a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://www.youtube.com/@matthewhaynesonline">YouTube</a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://huggingface.co/matthewhaynesonline">Hugging Face</a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  document
+    .querySelectorAll("h2[id], h3[id], h4[id], h5[id], h6[id]")
+    .forEach(function (heading) {
+      // Skip if heading already contains a link
+      if (heading.querySelector("a")) return;
+
+      const link = document.createElement("a");
+      link.href = "#" + heading.id;
+      link.className = "anchor-link";
+
+      // Move existing content into the anchor
+      while (heading.firstChild) {
+        link.appendChild(heading.firstChild);
+      }
+
+      heading.appendChild(link);
+    });
+</script>

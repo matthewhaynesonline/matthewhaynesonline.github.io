@@ -1,0 +1,38 @@
+$primary: #dc3545;
+
+$body-bg: #f8f8f7;
+$body-color: #212529;
+
+$body-color-dark: $body-bg;
+$body-bg-dark: $body-color;
+
+$font-family-sans-serif:
+  "Inter",
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  "Noto Sans",
+  "Liberation Sans",
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol",
+  "Noto Color Emoji" !default;
+
+$spacer: 1rem;
+
+$font-size-base: 1.5rem;
+$font-family-serif: "Domine", serif;
+$headings-font-family: $font-family-serif;
+
+$body-text-align: "justify";
+$link-decoration: none;
+
+$line-height-base: 1.75;
+$paragraph-margin-bottom: 2.5rem;
+$hr-margin-y: $spacer * 3;
+
+$h1-font-size: $font-size-base * 2.5 !default;

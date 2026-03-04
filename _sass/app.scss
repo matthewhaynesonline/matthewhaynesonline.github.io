@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+body {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: left;
+}
+
+.mt-10 {
+  padding-top: 10rem !important;
+}
+
+.highlight {
+  margin-bottom: $paragraph-margin-bottom;
+
+  pre {
+    padding: 0.5rem;
+
+    code {
+      color: $body-bg;
+    }
+  }
+}
+
+// Clickable anchors
+.anchor-link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+.anchor-link::after {
+  content: " #";
+  font-size: 0.8em;
+  opacity: 0;
+  margin-left: 0.3rem;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.anchor-link:hover {
+  text-decoration: underline;
+}
+
+.anchor-link:hover::after {
+  opacity: 0.5;
+}
+
+.header {
+  font-family: $font-family-serif;
+}
+
+.footer {
+  font-size: 1.2rem;
+}
+
+.home {
+  .main-container {
+    height: 90%;
+  }
+
+  .heading {
+    font-size: 10vw;
+  }
+
+  .sub-heading {
+    color: $red-700;
+    opacity: 0.5;
+  }
+}
+
+.posts-lists {
+  .post-date {
+    font-family: $font-family-sans-serif;
+    font-size: 1rem;
+  }
+}
+
+.footer-separator {
+  padding-right: 1rem;
+  margin-right: 1rem;
+
+  border: solid 2px #cdcdcd8a;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
