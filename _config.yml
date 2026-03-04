@@ -7,6 +7,6 @@ exclude:
 kramdown:
   auto_ids: true
 
-# plugins:
-#   # - jekyll-feed
-#   # - github-pages
+plugins:
+  - jekyll-feed
+  # - github-pages
