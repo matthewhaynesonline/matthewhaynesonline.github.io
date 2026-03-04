@@ -5,7 +5,7 @@ title: "Hello"
 
 <div class="container main-container">
   <div class="row align-items-center h-100">
-    <div class="col mt-10">
+    <div class="col mt-max">
       <h1 class="heading">
         Matthew Haynes
       </h1>
@@ -14,7 +14,7 @@ title: "Hello"
         Code &amp; Content
       </h4>
 
-      <ul class="list-unstyled mt-10 posts-lists">
+      <ul class="list-unstyled mt-max posts-lists">
         {% for post in site.posts limit:3 %}
           <li class="mb-5">
             <h3 class="post-title h5">
