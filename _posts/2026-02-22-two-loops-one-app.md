@@ -216,7 +216,7 @@ Let's find out if all that effort was even worth it. I should mention that bench
 
 <img class="img-fluid rounded" src='{{"/assets/images/pyper/charts-only-py.png"  | relative_url }}'  alt="Benchmark">
 
-**You love to see it.** We smashed the throughput and slashed the memory usages. Okay, that's all Folks!
+**You love to see it.** We smashed the throughput and slashed the memory usage. Okay, that's all Folks!
 
 Huh? What about Go and pure Rust?
 
