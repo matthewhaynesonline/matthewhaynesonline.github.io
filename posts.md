@@ -5,7 +5,7 @@ title: "Posts"
 
 <ul class="list-unstyled posts-lists">
   {% for post in site.posts %}
-    <li class="mb-5">
+    <li class="mb-4">
       <h3 class="post-title h5">
         <a href="{{ post.url }}">{{ post.title }}</a>
       </h3>

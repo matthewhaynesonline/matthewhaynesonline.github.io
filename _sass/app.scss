@@ -4,22 +4,26 @@ body {
   min-height: 100vh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-align: left;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   text-align: left;
+// }
 
 .mt-max {
-  padding-top: 10rem !important;
+  padding-top: 8rem;
 }
 
 @include media-breakpoint-down(md) {
   .mt-max {
-    padding-top: 5rem !important;
+    padding-top: 4rem;
+
+    &.posts-lists {
+      padding-top: 2rem;
+    }
   }
 }
 
@@ -67,6 +71,7 @@ h6 {
 
   a {
     color: $body-bg;
+    font-size: 1rem;
   }
 }
 

@@ -10,13 +10,13 @@ title: "Hello"
         Matthew Haynes
       </h1>
       
-      <h4 class="sub-heading text-end">
+      <h4 class="sub-heading text-end mt-3">
         Code &amp; Content
       </h4>
 
       <ul class="list-unstyled mt-max posts-lists">
         {% for post in site.posts limit:3 %}
-          <li class="mb-5">
+          <li class="mb-4">
             <h3 class="post-title h5">
               <a href="{{ post.url }}">{{ post.title }}</a>
             </h3>
