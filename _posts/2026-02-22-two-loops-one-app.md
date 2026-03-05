@@ -9,9 +9,9 @@ What if you could have the readable Python APIs you love, but the raw performanc
 
 <!--more-->
 
-That question led me to build a [Python web framework written in Rust](https://github.com/matthewhaynesonline/Pyper). The goal wasn't to build the next production ready framework (that already exists, it's called [Robyn](https://github.com/sparckles/Robyn)). The goal was to learn and experiment using Python and Rust together, and to benchmark the results against pure Rust, Go, FastAPI, and Flask.
+That question led me to build a [Python web framework written in Rust](https://github.com/matthewhaynesonline/Pyper). The goal wasn't to build the next production ready framework (that already exists, it's called [Robyn](https://github.com/sparckles/Robyn)). The goal was to learn and experiment with using Python and Rust together and to benchmark the results against pure Rust, Go, FastAPI and Flask.
 
-_This is a blog companion to the [YouTube video](https://youtu.be/u8VYgITTsnw) for those who prefer reading over watching. Code available on [GitHub](https://github.com/matthewhaynesonline/Pyper)._
+_This is a companion blog to the [YouTube video](https://youtu.be/u8VYgITTsnw) for those who prefer reading over watching. Code available on [GitHub](https://github.com/matthewhaynesonline/Pyper)._
 
 ---
 
