@@ -1,0 +1,15 @@
+{% if page.previous %}
+<a
+  class="page-nav-link text-truncate"
+  href="{{ page.previous.url | relative_url }}"
+>
+  Prev: {{ page.previous.title }}
+</a>
+{% endif %} {% if page.next %}
+<a
+  class="page-nav-link text-truncate float-end"
+  href="{{ page.next.url | relative_url }}"
+>
+  Next: {{ page.next.title }}
+</a>
+{% endif %}

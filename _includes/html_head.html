@@ -28,8 +28,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ "/assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css" | relative_url }}">
+
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
 
     <link rel="stylesheet" href="{{ "/assets/dist/bundle.css" | relative_url }}">
     <script type="module" src="{{ "/assets/dist/bundle.js" | relative_url }}"></script>
+
+    <script>
+      // For light / dark toggle to share between FOUC fix and component
+      window.__THEME_CONFIG__ = {
+        storageKey: "theme-preference",
+        attribute: "data-bs-theme",
+        mediaQuery: "(prefers-color-scheme: dark)",
+
+        // Pure function to resolve 'auto' into actual 'light' or 'dark'
+        resolveTheme: function (pref) {
+          if (pref === "dark" || pref === "light") return pref;
+
+          // Default to 'auto' logic if invalid or explicitly 'auto'
+          return window.matchMedia(this.mediaQuery).matches ? "dark" : "light";
+        },
+
+        // Helper to apply the theme to the DOM
+        applyTheme: function (theme) {
+          document.documentElement.setAttribute(this.attribute, theme);
+        },
+      };
+
+      // Prevent FOUC
+      (function () {
+        try {
+          const config = window.__THEME_CONFIG__;
+          const pref = localStorage.getItem(config.storageKey) || "auto";
+          const resolved = config.resolveTheme(pref);
+
+          config.applyTheme(resolved);
+        } catch (e) {
+          console.error(e);
+        }
+      })();
+    </script
   </head>

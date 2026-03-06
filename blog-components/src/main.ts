@@ -1,8 +1,11 @@
 import { mount } from "svelte";
 import "./app.css";
-import Hi from "./Hi.svelte";
 
-const components = { Hi };
+import InPageNav from "./InPageNav.svelte";
+import Search from "./Search.svelte";
+import ThemeToggle from "./ThemeToggle.svelte";
+
+const components = { InPageNav, Search, ThemeToggle };
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const componentTargetElements = document.querySelectorAll(

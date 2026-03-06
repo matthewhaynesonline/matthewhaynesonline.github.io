@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
   {% include html_head.html %}
-  <div data-svelte-component="Hi"></div>
 
   <body class="home">
+    
+  <div class="container">
+    <div class="d-flex justify-content-end">
+      <div data-svelte-component="Search"></div>
+      <div data-svelte-component="ThemeToggle"></div>
+    </div>
+  </div>
+
     {{content}}
 
     {% include footer.html %}

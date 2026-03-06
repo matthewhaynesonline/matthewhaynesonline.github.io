@@ -13,17 +13,7 @@
 
           {{ content }}
 
-          {% if page.previous %}
-            <a href="{{ page.previous.url | relative_url }}">
-              ← {{ page.previous.title }}
-            </a>
-          {% endif %}
-
-          {% if page.next %}
-            <a class="float-end" href="{{ page.next.url | relative_url }}">
-              {{ page.next.title }} →
-            </a>
-          {% endif %}
+          {% include page_prev_next.html %}
         </div>
       </div>
     </div>

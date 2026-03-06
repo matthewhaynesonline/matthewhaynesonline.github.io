@@ -3,6 +3,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 title: "Matthew Haynes's Blog" # the name of your site, e.g. ACME Corp.
 author:
   name: "Matthew Haynes"
+timezone: America/New_York
 exclude:
   - "README.md"
   - "**/README.md"
