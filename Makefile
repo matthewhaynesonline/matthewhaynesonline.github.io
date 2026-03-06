@@ -1,4 +1,12 @@
-all: serve
+.PHONY: dev vite jekyll
 
-serve: 
-		bundle exec jekyll serve
+all: dev
+
+dev:
+	$(MAKE) -j2 vite jekyll
+
+vite:
+	cd blog-components && npm install && npx vite build --watch
+
+jekyll:
+	bundle exec jekyll serve
