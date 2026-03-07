@@ -6,13 +6,6 @@ body {
   min-height: 100vh;
 }
 
-a:not(.anchor-link) {
-  word-break: break-all; /* iOS Safari needs this specifically */
-  overflow-wrap: break-word; /* Fallback for other browsers */
-  hyphens: auto;
-  -webkit-hyphens: auto; /* Optional: adds hyphens on iOS */
-}
-
 // =============================================================================
 // Footer
 // =============================================================================
