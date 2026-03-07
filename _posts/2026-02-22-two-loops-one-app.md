@@ -518,7 +518,9 @@ A simple index template:
   </head>
 
   <body>
+    {% raw %}
     <main class="container">{{body}}</main>
+    {% endraw %}
   </body>
 </html>
 ```
