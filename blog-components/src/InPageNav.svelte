@@ -173,15 +173,6 @@
     color: var(--bs-primary) !important;
   }
 
-  .back-to-top {
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .back-to-top:hover {
-    text-decoration: underline;
-  }
-
   .mobile-nav-dropdown {
     padding: 0.5rem 1rem;
     max-height: 60vh;
