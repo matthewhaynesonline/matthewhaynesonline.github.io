@@ -135,7 +135,7 @@
     <div class="card-body p-1">
       <details bind:this={detailsElement}>
         <summary
-          class="btn btn-light w-100 d-flex justify-content-between align-items-center"
+          class="btn bg-transparent border-0 w-100 d-flex justify-content-between align-items-center"
         >
           <span class="mobile-nav-title">{title}</span>
           <span class="mobile-nav-icon">▼</span>
