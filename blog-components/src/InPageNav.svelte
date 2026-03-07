@@ -1,4 +1,6 @@
 <script lang="ts">
+  import BackToTop from "./lib/BackToTop.svelte";
+
   interface Heading {
     id: string;
     text: string | null;
@@ -19,11 +21,6 @@
     root: null,
     rootMargin: "0px 0px -60% 0px",
     threshold: 1.0,
-  };
-
-  const scrollTopOptions: ScrollToOptions = {
-    top: 0,
-    behavior: "smooth",
   };
 
   const inPageNavListClasses =
@@ -72,12 +69,6 @@
     return () => observer.disconnect();
   });
 
-  function scrollToTop(event: Event): void {
-    event.preventDefault();
-    window.scrollTo(scrollTopOptions);
-    reset();
-  }
-
   function reset(): void {
     activeId = "";
     closeDetailsElement();
@@ -122,13 +113,7 @@
       {/each}
     </ul>
 
-    <a
-      class="back-to-top text-light-emphasis mt-3 d-block"
-      href="#top"
-      onclick={scrollToTop}
-    >
-      ↑ Back to top
-    </a>
+    <BackToTop scrollToTopCallback={reset} />
   </nav>
 
   <div class="card d-block d-md-none">

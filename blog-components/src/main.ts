@@ -4,8 +4,9 @@ import "./app.css";
 import InPageNav from "./InPageNav.svelte";
 import Search from "./Search.svelte";
 import ThemeToggle from "./ThemeToggle.svelte";
+import BackToTop from "./lib/BackToTop.svelte";
 
-const components = { InPageNav, Search, ThemeToggle };
+const components = { InPageNav, Search, ThemeToggle, BackToTop };
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const componentTargetElements = document.querySelectorAll(
