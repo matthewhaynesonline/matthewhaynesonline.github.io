@@ -5,7 +5,7 @@
   --highlight-line-hl: rgb(22, 26, 30);
   --highlight-text: #cdd6f4;
   --highlight-muted: #5c6e82;
-  --highlight-comment: #4d6275;
+  --highlight-comment: #607a8f;
   --highlight-keyword: #c792ea;
   --highlight-operator: #f07178;
   --highlight-function: #89dceb;
@@ -28,6 +28,7 @@
 .highlight pre,
 .highlight {
   background-color: var(--highlight-bg);
+  color: var(--highlight-text);
   border-radius: 8px;
   padding: 1rem;
   font-size: 0.9rem;
