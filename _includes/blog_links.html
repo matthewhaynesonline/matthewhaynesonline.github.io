@@ -1,0 +1,10 @@
+{% if page.yt_id %}
+<em>
+  Video guide:
+  <a href="https://youtu.be/{{ page.yt_id }}">
+    https://youtu.be/{{ page.yt_id }}
+  </a>
+</em>
+{% endif%} {% if page.gh_url %}
+<em>Code: <a href="{{ page.gh_url }}">{{ page.gh_url }}</a></em>
+{% endif%}

@@ -1,7 +1,7 @@
-{% if page.yt_video %}
+{% if page.yt_id %}
 <div class="ratio ratio-16x9 mb-4">
   <iframe
-    src="{{ page.yt_video }}"
+    src="https://www.youtube.com/embed/{{ page.yt_id }}"
     title="YouTube video player"
     frameborder="0"
     allow="
@@ -17,4 +17,13 @@
     allowfullscreen
   ></iframe>
 </div>
+{% endif%} {% if page.yt_id && page.gh_url %}
+<p>
+  <em>
+    This is a companion blog to the
+    <a href="https://youtu.be/{{ page.yt_id }}">YouTube video</a> for those who
+    prefer reading over watching. Code available on
+    <a href="{{ page.gh_url }}">GitHub</a>.
+  </em>
+</p>
 {% endif%}

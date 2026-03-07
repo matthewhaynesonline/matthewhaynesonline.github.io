@@ -3,7 +3,8 @@ layout: blog
 title: "What If Python Code Could Run Like Rust?"
 excerpt_separator: <!--more-->
 banner_img: "/assets/images/pyper/pyper-banner.png"
-yt_video: "https://www.youtube.com/embed/u8VYgITTsnw?si=nekiM_WcxfAtDI7v"
+yt_id: "u8VYgITTsnw"
+gh_url: "https://github.com/matthewhaynesonline/Pyper"
 ---
 
 What if you could have the readable Python APIs you love, but the raw performance of a systems language under the hood?
@@ -13,8 +14,6 @@ What if you could have the readable Python APIs you love, but the raw performanc
 That question led me to build a [Python web framework written in Rust](https://github.com/matthewhaynesonline/Pyper). Mind you, the goal wasn't to build the next production ready framework (that already exists, it's called [Robyn](https://github.com/sparckles/Robyn)). Rather, the goal was to learn and experiment with using Python and Rust together and to benchmark the results against pure Rust, Go, FastAPI and Flask.
 
 {% include yt_embed.html %}
-
-_This is a companion blog to the [YouTube video](https://youtu.be/u8VYgITTsnw) for those who prefer reading over watching. Code available on [GitHub](https://github.com/matthewhaynesonline/Pyper)._
 
 ---
 
@@ -728,6 +727,4 @@ Okay, that's all Folks!
 
 _Remember: the proper version of this idea is [Robyn](https://github.com/sparckles/Robyn) and it's worth checking out if this approach interests you. This experiment was just a proof of concept that shows you how it works starting from the basics._
 
-_Code: [github.com/matthewhaynesonline/Pyper](https://github.com/matthewhaynesonline/Pyper)_
-
-_Video guide: [youtu.be/u8VYgITTsnw](https://youtu.be/u8VYgITTsnw)_
+{% include blog_links.html %}

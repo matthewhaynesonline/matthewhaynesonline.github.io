@@ -17,12 +17,12 @@
     includeScore: true,
     shouldSort: true,
     minMatchCharLength: 2,
-    threshold: 0.4, // slightly more forgiving — short tech terms like "LLM" or "rs" are fuzzy-hard
-    distance: 200, // excerpt snippets can be long; default 100 cuts off matches in longer strings
+    threshold: 0.4,
+    distance: 200,
     keys: [
       { name: "title", weight: 0.6 },
       { name: "excerpt", weight: 0.3 },
-      { name: "date", weight: 0.1 }, // lets users find posts by year/month if needed
+      { name: "date", weight: 0.1 },
     ],
   };
 
@@ -68,7 +68,6 @@
     query = "";
   }
 
-  // Svelte Action: Automatically focus the input when it mounts
   function autoFocus(node: HTMLInputElement): void {
     node.focus();
   }
