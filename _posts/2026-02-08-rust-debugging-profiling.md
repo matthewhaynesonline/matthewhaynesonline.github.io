@@ -388,7 +388,7 @@ _P.S. **On Linux?** Try `perf + hotspot` for CPU profiling and `heaptrack` for m
 
 ## Bonus: When All Else Fails
 
-[When porting an ML model from Python to Rust](https://github.com/matthewhaynesonline/provence-rs), I ran into an issue where LLDB would itself to crash. I'm not sure why, but my guess is that it can't handle inspecting tensors of that size. In that case? Back to print
+[When porting an ML model from Python to Rust](https://github.com/matthewhaynesonline/provence-rs), I ran into an issue where LLDB would itself crash. I'm not sure why, but my guess is that it can't handle inspecting tensors of that size. In that case? Back to print
 debugging. **So, don't be too proud to use the tools you have for the job.**
 
 ## Summary
