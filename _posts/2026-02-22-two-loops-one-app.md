@@ -579,33 +579,128 @@ Well...
 
 Pesky y axis scaling strikes again...
 
-So we benchmarked against Axum (pure Rust), Go (net/http), FastAPI, and Flask using wrk with 1,000 concurrent connections over 10 seconds. Two scenarios were tested: an I/O bound test with an artificial delay (simulating database / API calls) and a CPU bound test with no delay (raw throughput). Thread counts were normalized: each framework was given 5 OS threads (`TOKIO_WORKER_THREADS=4` 4 Tokio workers + 1 main thread for Rust, `GOMAXPROCS=2` for Go which gave 5 total, FastAPI defaults to 5). Flask was tested in both single threaded and multi threaded modes (and the threads weren't capped to give it a fighting chance).
+So we benchmarked against Axum (pure Rust), Go (net/http), FastAPI, and Flask using wrk with 1,000 concurrent connections over 10 seconds. Two scenarios were tested:
 
-### I/O Bound Results
+1.  An I/O bound test with an artificial delay (simulating database / API calls)
+2.  A CPU bound test with no delay (raw throughput).
 
-| Framework          | Requests/sec | Peak Memory | Threads |
-| ------------------ | ------------ | ----------- | ------- |
-| Axum               | ~244         | 10 MB       | 5       |
-| Go                 | ~244         | 21 MB       | 5       |
-| **Pyper (hybrid)** | **~244**     | **36 MB**   | **5**   |
-| FastAPI            | ~237         | 60 MB       | 5       |
-| Flask (threaded)   | ~221         | 58 MB       | 248     |
-| Flask (single)     | ~1           | 39 MB       | 1       |
+Also, thread counts were normalized; each framework was given 5 OS threads:
+
+1. Rust: `TOKIO_WORKER_THREADS=4` (4 Tokio workers + 1 main thread)
+2. Go: `GOMAXPROCS=2` (which gave 5 total)
+3. FastAPI: defaults to 5
+4. Flask: was tested in both single threaded and multi threaded modes
+   1. **Note: for Flask, the threads weren't capped to give it a fighting chance and see how sync mulithreaded code would behave**
+
+#### I/O Bound Results
+
+<div class="table-responsive mb-4">
+   <table class="table table-striped align-middle">
+     <thead>
+       <tr>
+         <th scope="col">Framework</th>
+         <th scope="col">Requests/sec</th>
+         <th scope="col">Peak Memory</th>
+         <th scope="col">Threads</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td>Axum</td>
+         <td>~244</td>
+         <td>10 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>Go</td>
+         <td>~244</td>
+         <td>21 MB</td>
+         <td>5</td>
+       </tr>
+       <tr class="fw-bold">
+         <td>Pyper (hybrid)</td>
+         <td>~244</td>
+         <td>36 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>FastAPI</td>
+         <td>~237</td>
+         <td>60 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>Flask (threaded)</td>
+         <td>~221</td>
+         <td>58 MB</td>
+         <td>248</td>
+       </tr>
+       <tr>
+         <td>Flask (single)</td>
+         <td>~1</td>
+         <td>39 MB</td>
+         <td>1</td>
+       </tr>
+     </tbody>
+   </table>
+   </div>
 
 For the I/O results: **Rust, Go, and the Pyper hybrid are essentially identical**. Even FastAPI is only about 3% slower.
 
 **The lesson here is that for I/O bound workloads, architecture (async vs. sync) matters far more than language choice.**
 
-### CPU Bound Results
+#### CPU Bound Results
 
-| Framework          | Requests/sec | Peak Memory | Threads |
-| ------------------ | ------------ | ----------- | ------- |
-| Axum               | ~202,000     | 13 MB       | 5       |
-| Go                 | ~107,000     | 20 MB       | 5       |
-| **Pyper (hybrid)** | **~39,000**  | **38 MB**   | **5**   |
-| FastAPI            | ~22,000      | 58 MB       | 5       |
-| Flask (threaded)   | ~1,600       | 45 MB       | 47      |
-| Flask (single)     | ~1,600       | 43 MB       | 1       |
+<div class="table-responsive mb-4">
+   <table class="table table-striped align-middle">
+     <thead>
+       <tr>
+         <th scope="col">Framework</th>
+         <th scope="col">Requests/sec</th>
+         <th scope="col">Peak Memory</th>
+         <th scope="col">Threads</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td>Axum</td>
+         <td>~202,000</td>
+         <td>13 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>Go</td>
+         <td>~107,000</td>
+         <td>20 MB</td>
+         <td>5</td>
+       </tr>
+       <tr class="fw-bold">
+         <td>Pyper (hybrid)</td>
+         <td>~39,000</td>
+         <td>38 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>FastAPI</td>
+         <td>~22,000</td>
+         <td>58 MB</td>
+         <td>5</td>
+       </tr>
+       <tr>
+         <td>Flask (threaded)</td>
+         <td>~1,600</td>
+         <td>45 MB</td>
+         <td>47</td>
+       </tr>
+       <tr>
+         <td>Flask (single)</td>
+         <td>~1,600</td>
+         <td>43 MB</td>
+         <td>1</td>
+       </tr>
+     </tbody>
+   </table>
+   </div>
 
 Here the picture is different. Pure Rust is around 5x faster than the hybrid. But the hybrid is still **~75% faster than FastAPI** (not bad, eh?).
 
@@ -619,7 +714,7 @@ The most underrated column in the benchmark is memory. With 1 GB of RAM:
 - You can run ~27 Pyper hybrid instances
 - You can run ~99 Axum instances
 
-At scale, this translates directly to infra costs and could be the difference between your AWS account rep getting a Honda or a Mercedes at the end of the year.
+At scale, this translates directly to infra costs and could be the difference between your AWS account rep getting a Honda or a Mercedes with their year end bonus.
 
 ## Verdict: is Rust + Python Worth It?
 

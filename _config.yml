@@ -4,13 +4,13 @@ title: "Matthew Haynes's Blog" # the name of your site, e.g. ACME Corp.
 author:
   name: "Matthew Haynes"
 timezone: America/New_York
-exclude:
-  - "README.md"
-  - "**/README.md"
-  - blog-components
 kramdown:
   auto_ids: true
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   # - github-pages
+exclude:
+  - "README.md"
+  - "**/README.md"
+  - blog-components

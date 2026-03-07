@@ -131,7 +131,7 @@
     </a>
   </nav>
 
-  <div class="card text-bg-light d-block d-md-none">
+  <div class="card d-block d-md-none">
     <div class="card-body p-1">
       <details bind:this={detailsElement}>
         <summary

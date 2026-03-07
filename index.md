@@ -10,7 +10,7 @@ title: "Hello"
         Matthew Haynes
       </h1>
       
-      <h4 class="sub-heading text-end mt-3">
+      <h4 class="sub-heading text-body-tertiary text-end mt-3">
         Code &amp; Content
       </h4>
 

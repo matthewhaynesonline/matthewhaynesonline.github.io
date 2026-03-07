@@ -1,0 +1,206 @@
+/* Nightfall — Rouge/Jekyll syntax theme for SCSS (custom) */
+
+:root {
+  --highlight-bg: rgb(26, 30, 34); /* darker tint vs page bg */
+  --highlight-line-hl: rgb(22, 26, 30);
+  --highlight-text: #cdd6f4;
+  --highlight-muted: #5c6e82;
+  --highlight-comment: #4d6275;
+  --highlight-keyword: #c792ea;
+  --highlight-operator: #f07178;
+  --highlight-function: #89dceb;
+  --highlight-string: #a6da95;
+  --highlight-number: #fab387;
+  --highlight-constant: #fab387;
+  --highlight-builtin: #89b4fa;
+  --highlight-decorator: #f5c2e7;
+  --highlight-exception: #f38ba8;
+  --highlight-tag: #f07178;
+  --highlight-punct: #abb2bf;
+  --highlight-error-fg: #ff6b6b;
+  --highlight-error-bg: #2a1a1a;
+  --highlight-diff-del: #f38ba8;
+  --highlight-diff-del-bg: #2a1520;
+  --highlight-diff-ins: #a6da95;
+  --highlight-diff-ins-bg: #152a1e;
+}
+
+.highlight pre,
+.highlight {
+  background-color: var(--highlight-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.highlight .hll {
+  background-color: var(--highlight-line-hl);
+}
+
+/* Comments */
+.highlight .c,
+.highlight .cm,
+.highlight .cp,
+.highlight .c1,
+.highlight .cs {
+  color: var(--highlight-comment);
+  font-style: italic;
+}
+
+/* Errors */
+.highlight .err {
+  color: var(--highlight-error-fg);
+  background-color: var(--highlight-error-bg);
+}
+
+/* Keywords */
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt {
+  color: var(--highlight-keyword);
+}
+
+/* Keyword.Namespace */
+.highlight .kn {
+  color: var(--highlight-operator);
+}
+
+/* Operators */
+.highlight .o,
+.highlight .ow {
+  color: var(--highlight-operator);
+}
+
+/* Punctuation */
+.highlight .p {
+  color: var(--highlight-punct);
+}
+
+/* Base names / text */
+.highlight .n,
+.highlight .nl,
+.highlight .nn,
+.highlight .py,
+.highlight .nv,
+.highlight .bp,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+  color: var(--highlight-text);
+}
+
+/* Builtins */
+.highlight .nb {
+  color: var(--highlight-builtin);
+}
+
+/* Classes, Functions, Other names */
+.highlight .nc,
+.highlight .nf,
+.highlight .nx {
+  color: var(--highlight-function);
+}
+
+/* Attributes */
+.highlight .na {
+  color: var(--highlight-string);
+}
+
+/* Constants */
+.highlight .no {
+  color: var(--highlight-constant);
+}
+
+/* Decorators */
+.highlight .nd {
+  color: var(--highlight-decorator);
+}
+
+/* Exceptions */
+.highlight .ne {
+  color: var(--highlight-exception);
+}
+
+/* Entities */
+.highlight .ni {
+  color: var(--highlight-text);
+}
+
+/* Tags */
+.highlight .nt {
+  color: var(--highlight-tag);
+}
+
+/* Literals */
+.highlight .l {
+  color: var(--highlight-number);
+}
+
+/* Numbers */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+  color: var(--highlight-number);
+}
+
+/* Strings */
+.highlight .s,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .s2,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .s1,
+.highlight .ss {
+  color: var(--highlight-string);
+}
+
+/* String escapes */
+.highlight .se {
+  color: var(--highlight-number);
+}
+
+/* Literal.Date */
+.highlight .ld {
+  color: var(--highlight-string);
+}
+
+/* Generic */
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gh {
+  color: var(--highlight-builtin);
+  font-weight: bold;
+}
+.highlight .gu {
+  color: var(--highlight-muted);
+}
+
+/* Diff */
+.highlight .gd {
+  color: var(--highlight-diff-del);
+  background-color: var(--highlight-diff-del-bg);
+}
+.highlight .gi {
+  color: var(--highlight-diff-ins);
+  background-color: var(--highlight-diff-ins-bg);
+}
+
+/* Whitespace */
+.highlight .w {
+  color: var(--highlight-text);
+}

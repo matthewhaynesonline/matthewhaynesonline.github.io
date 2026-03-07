@@ -15,11 +15,14 @@
   const fuseOptions = {
     isCaseSensitive: false,
     includeScore: true,
-    threshold: 0.3,
+    shouldSort: true,
+    minMatchCharLength: 2,
+    threshold: 0.4, // slightly more forgiving — short tech terms like "LLM" or "rs" are fuzzy-hard
+    distance: 200, // excerpt snippets can be long; default 100 cuts off matches in longer strings
     keys: [
-      { name: "title", weight: 0.7 },
-      { name: "tags", weight: 0.2 },
-      { name: "excerpt", weight: 0.1 },
+      { name: "title", weight: 0.6 },
+      { name: "excerpt", weight: 0.3 },
+      { name: "date", weight: 0.1 }, // lets users find posts by year/month if needed
     ],
   };
 
