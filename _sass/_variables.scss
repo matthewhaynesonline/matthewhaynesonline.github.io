@@ -1,6 +1,6 @@
 $primary: #dc3545;
 
-$body-bg: #f4f4ef;
+$body-bg: #f6f6f2;
 $body-color: #22272c;
 
 $body-color-dark: $body-bg;
@@ -38,3 +38,7 @@ $paragraph-margin-bottom: 2rem;
 $hr-margin-y: $spacer * 2.75;
 
 $h1-font-size: $font-size-base * 2.25;
+
+$navbar-dark-color: $body-bg;
+$navbar-dark-hover-color: $body-bg;
+$navbar-dark-active-color: $body-bg;
