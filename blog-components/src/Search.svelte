@@ -168,7 +168,6 @@
   .search-trigger {
     min-width: 180px;
     max-width: 300px;
-    transform: scale(80%);
   }
 
   /* Strip out the heavy default blue glow from the modal input */
