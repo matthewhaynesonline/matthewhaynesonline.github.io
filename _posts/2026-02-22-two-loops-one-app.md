@@ -26,7 +26,7 @@ The bridge between Python and Rust is built on two tools:
 
 PyO3 handles the _what_ (the interop), and Maturin handles the _how_ (the build and packaging).
 
-<div class="card text-bg-light">
+<div class="card text-bg-callout">
   <div class="card-body">
     <p class="card-text">
     <strong>ProTip™</strong>: when installing Maturin, I'd recommend installing it from source rather than via Homebrew as the Homebrew version can conflict with a Rustup installation. Trust me, save yourself hours of head to table smashing. See: <a href="https://github.com/PyO3/maturin/pull/2605">PyO3/maturin/pull/2605</a>

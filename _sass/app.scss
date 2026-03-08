@@ -153,3 +153,12 @@ body {
 .scale-80 {
   transform: scale(80%) !important;
 }
+
+.text-bg-callout {
+  color: $body-color-dark !important;
+  background-color: $callout-bg !important;
+
+  a {
+    color: $callout-accent;
+  }
+}
