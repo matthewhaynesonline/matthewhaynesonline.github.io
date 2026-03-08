@@ -16,16 +16,8 @@ title: "Hello"
 
       <ul class="list-unstyled mt-max posts-lists">
         {% for post in site.posts limit:3 %}
-          <li class="mb-4">
-            <h3 class="post-title h5">
-              <a href="{{ post.url }}">{{ post.title }}</a>
-            </h3>
-            <h6 class="post-date text-body-tertiary">
-              <small>
-                {{ post.date | date: "%b %d, %Y" }}
-              </small>
-            </h6>
-            {{ post.excerpt }}
+          <li>
+            {% include post_teaser.html %}
           </li>
         {% endfor %}
       </ul>
