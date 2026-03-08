@@ -11,7 +11,7 @@ Let's talk debugging and profiling. Three levels: from trusty `println!` all the
 
 <!--more-->
 
-Print debugging: it's simple, comforting and sometimes it's just easier to throw in a quick print statement than trying to get a debugger attached. But there's a ton of powerful debugging tools and Rust, perhaps surprisingly, makes it pretty easy to get up and running with these tools. So, ket's take a high level walk through some debugging and profiling techniques.
+Print debugging: it's simple, comforting and sometimes it's just easier to throw in a quick print statement than trying to get a debugger attached. But there's a ton of powerful debugging tools out there and Rust, perhaps surprisingly, makes it pretty easy to get up and running with them. So, let's take a high level walk through some debugging and profiling.
 
 {% include yt_embed.html %}
 
@@ -25,10 +25,10 @@ We'll use a small demo project that has several bugs baked in to serve as our pl
 
 There's also some things we'll look at that aren't quite bugs, but worth inspecting:
 
-- An ORM macro that rejects usernames containing "admin"
-- stable vs unstable sorting (profiling memory allocations)
+- An ORM macro that rejects any fields containing "admin"
+- Stable vs unstable sorting (profiling memory allocations)
 
-Let's begin.
+[Let's begin.](https://www.youtube.com/watch?v=gH5ja60ZuWE&t=13s)
 
 ## Level 1: Print Debugging
 
@@ -36,13 +36,13 @@ Let's begin.
 
 Before reaching for a step debugger, it's worth knowing how to get the most out of [print debugging in Rust](https://doc.rust-lang.org/std/fmt/index.html). There are [two formatting traits](https://doc.rust-lang.org/std/fmt/#fmtdisplay-vs-fmtdebug) to know about:
 
-- **`Display`**: for user facing output (you implement this yourself for custom types).
-- **`Debug`**: for programmer facing debugging output.
-  - _Most standard types implement it, and you can `#[derive(Debug)]` on custom structs without writing it manually._
+- **`Display`**: for user facing output (you implement this yourself for custom types)
+- **`Debug`**: for programmer facing debugging output
+  - _Most standard types implement it, and you can `#[derive(Debug)]` on custom structs without writing it manually_
 
 **Note:** Collections like `Vec` implement `Debug` but not `Display`, because how a list should be displayed to a user is application specific.
 
-With these traits in place, you can use `println!`, `format!`, and friends:
+With these traits in place, you can use `println!`, `format!` and friends:
 
 ```rs
 pub(crate) fn do_print(data: &[Record]) {
@@ -62,7 +62,7 @@ pub(crate) fn do_print(data: &[Record]) {
 }
 ```
 
-One quick note: `println!` writes to stdout, while [`eprintln!`](https://doc.rust-lang.org/std/macro.eprintln.html) writes to stderr. This matters when you're [capturing output](https://en.wikipedia.org/wiki/Standard_streams) (some tooling captures one but not the other).
+One quick note: `println!` writes to stdout, while [`eprintln!`](https://doc.rust-lang.org/std/macro.eprintln.html) writes to stderr. This matters when you're [capturing output](https://en.wikipedia.org/wiki/Standard_streams) (as some tooling captures one but not the other).
 
 ### The `dbg!` Macro
 
@@ -80,21 +80,23 @@ pub(crate) fn do_dbg(data: &[Record]) {
   dbg!(&data[2].value);
 ```
 
+Also, pass variables as references so the borrow checker doesn't complain.
+
+And because `dbg!` returns the value of the expression, you can wrap it around an existing expression without restructuring your code.
+
 ```rs
 // x gets the value back, dbg! doesn't consume it
 let x = dbg!(&some_value);
-let x = dbg!(1 + 1);
+let y = dbg!(1 + 1);
 ```
-
-Also, pass variables as references so the borrow checker doesn't complain. And because `dbg!` returns the value of the expression, you can wrap it around an existing expression without restructuring your code.
 
 ### Logging vs. Tracing
 
-For anything beyond one off debugging, reach for structured output:
+For anything beyond one off debugging, you'll want to reach for structured output:
 
-- **[`log`](https://github.com/rust-lang/log)**: the classic choice for traditional linear text logs.
-- **[`tracing`](https://github.com/tokio-rs/tracing)**: built for structured, contextual logging, **especially in async code**.
-  - Instead of flat log lines, it introduces _spans_ (a period of time) and _events_ (a moment in time).
+- **[`log`](https://github.com/rust-lang/log)**: the classic choice for traditional _linear_ text logs
+- **[`tracing`](https://github.com/tokio-rs/tracing)**: built for structured, contextual logging, **especially in async code**
+  - Instead of flat log lines, it introduces _spans_ (a period of time) and _events_ (a moment in time)
 
 To illustrate the difference, consider a restaurant kitchen processing multiple concurrent orders. With plain logging, your output looks something like:
 
@@ -109,7 +111,7 @@ INFO pizza done
 
 With tracing, each log entry knows which span it belongs to. A pizza order's "cooking" event is a child of the pizza order span. When targeting a structured log backend, and not just stdout, you get nested, queryable, analyzable logs rather than a flat stream of text. At scale, especially in an async app (e.g. with controllers calling services calling an ORM), this segmentation pays dividends.
 
-Here's how to run demo project with each:
+Here's how to run the demo project with each:
 
 ```sh
 cargo run --features do_logging
@@ -157,9 +159,9 @@ RUST_BACKTRACE=full cargo run
 
 ## Level 2: Step Debugging
 
-We've grown a lot over these last paragraphs. And I think you're ready. I'm proud of you. It's time to leave the print statements behind and [use an actual debugger.](https://code.visualstudio.com/docs/languages/rust#_debugging)
+We've grown a lot over these last paragraphs. I'm proud of you and I think you're ready. It's time to leave the print statements behind and [use an actual debugger.](https://code.visualstudio.com/docs/languages/rust#_debugging)
 
-If you've had to set up a debugger with containers and interpreted languages, then you're probably thinking this is going to be a pain and you'd rather just stick to printing all over the place. Well, good news! Since Rust builds via LLVM, you get [LLDB](https://lldb.llvm.org/) for free on Mac and Linux (and the Microsoft debugger on Windows, apparently).
+If you've had to set up a debugger with containers and interpreted languages, then you're probably thinking this is going to be a pain and you'd rather just stick to printing to your heart's content. Well, good news! Since Rust builds via LLVM, you get [LLDB](https://lldb.llvm.org/) for free on Mac and Linux (and the Microsoft debugger on Windows, apparently).
 
 ### Setup in VS Code
 
@@ -189,7 +191,7 @@ In the Breakpoints pane (bottom left in VS Code), check **"All Exceptions"** to 
 
 ### Catching Panics
 
-With the debugger attached, the off by one panic in `find_record()` is caught immediately. The call stack shows the crash location deep in Rust's standard library assembly but that's normal. Walk up the call stack to find the first frame that belongs to your code.
+With the debugger attached, the off by one panic in `find_record()` should be caught immediately. The call stack probably shows the crash location deep in Rust's standard library and in assembly, but that's normal. Walk up the call stack to find the first frame that belongs to your code.
 
 In the demo, the bug is pretty obvious (but that might not be the case in your code): `i` is `1_000_000` while the last valid index in the data is `999_999`. A classic [`off-by-one`](https://en.wikipedia.org/wiki/Off-by-one_error).
 
@@ -206,7 +208,7 @@ pub(crate) fn find_record(data: &[Record], target_id: usize) -> Option<&Record> 
 
 #### Rust std lib assembly
 
-As mentioned, if you ever end up stepping through the Rust standard library itself, you'll probably see assembly (which is how it's shipped for your platform). If you _do_ want to step through the std lib, you should [be able to add its source](https://users.rust-lang.org/t/vscode-set-up-rust-std-lib-source-code-navigation-and-debugging/69064) (but I haven't bothered):
+As mentioned, if you ever end up stepping through the Rust standard library itself, you'll probably see assembly (which is how it's shipped for your platform). If you _do_ want to step through the std lib, you should [be able to add its source](https://users.rust-lang.org/t/vscode-set-up-rust-std-lib-source-code-navigation-and-debugging/69064) (but I haven't bothered to check):
 
 ```sh
 rustup component add rust-src
@@ -214,7 +216,7 @@ rustup component add rust-src
 
 ### Finding Logic Bugs
 
-With panics out of the way, where the step debugger really shines is for logic errors. You know that slips by the compiler and runtime.
+With panics out of the way, we can see where the step debugger really shines: logic errors. You know, the stuff that slips by the compiler and runtime.
 
 In `generate_value()`, every record ends up with the same `value`. Setting a breakpoint inside the function and stepping through reveals why: the code tries to use nanoseconds from the current timestamp as a unique seed, then applies a modulus operation to get the last two digits. But since all records are generated within the same millisecond, the nanosecond portion is the same for all of them, making every value identical.
 
@@ -234,7 +236,7 @@ if config::USE_BROKEN_RECORD_VALUE_CALCULATION {
 }
 ```
 
-The fix is to use a proper random number generator instead.
+And the fix is to use a proper random number generator instead:
 
 ```rs
 else {
@@ -247,7 +249,7 @@ else {
 
 ### Debugging Macros
 
-Macros, while super powerful, are also witchcraft (up there with regex `s/\bgo\b/rust/g'`). One underappreciated use of the step debugger is stepping _into_ the macro code to untangle it.
+Macros, while powerful, are also witchcraft (up there with the likes of regex `s/\bgo\b/rust/g`). One underappreciated use of the step debugger is stepping _into_ the macro code to untangle it.
 
 In the demo, an ORM style `define_entity!` macro includes a `validate_field` call.
 
@@ -263,7 +265,9 @@ fn validate_field<T: std::fmt::Display>(&self, field: &str, value: &T) -> Result
 }
 ```
 
-By setting a breakpoint inside `validate_field`, you can step through the expanded code and see exactly what's happening. In this case: any field value containing the string `"admin"` is rejected. The user `superadmin` fails because `superadmin` (do I have to explain this?) contains `admin`. Mystery solved; good work, gang.
+By setting a breakpoint inside `validate_field`, you can step through the expanded code and see exactly what's happening. In this case: any field value containing the string `"admin"` is rejected. The user `superadmin` fails because `superadmin` (do I have to explain this?) contains `admin`.
+
+Mystery solved; good work, gang.
 
 ## Level 3: Profiling
 
@@ -304,6 +308,8 @@ Our first profiling tool is a Flame Graph, which is used to identify performance
 
 ### flamegraph-rs
 
+<img class="img-fluid rounded" src='{{"/assets/images/rust-debugging/19-cargo-flame.png"  | relative_url }}'  alt="Flame Graph">
+
 [`flamegraph-rs`](https://github.com/flamegraph-rs/flamegraph) is the quickest way to get started IMO. Install it and run:
 
 ```sh
@@ -312,7 +318,7 @@ cargo flamegraph --dev
 cargo flamegraph --dev --flamechart
 ```
 
-For the demo's CPU heavy `fibonacci()` function (a naive recursive implementation), the flame graph makes it immediately obvious where the time is going: a wide bar labeled `fibonacci` at the top of the stack.
+For the demo's CPU heavy `fibonacci()` function (a naive recursive implementation), the flame graph makes it immediately obvious where the time is going (do I have to explain this?): a wide bar labeled `fibonacci` at the top of the stack.
 
 ```rs
 #[inline(never)]
