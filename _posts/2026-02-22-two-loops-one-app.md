@@ -30,7 +30,9 @@ One practical note: when installing Maturin, I'd recommend installing it from so
 
 ## Step 1: Hello World (Calling Rust from Python)
 
-[Pyper/commit/52a98d3](https://github.com/matthewhaynesonline/Pyper/commit/52a98d343eec731ed37e960f785fbb734b9fbac4)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/52a98d343eec731ed37e960f785fbb734b9fbac4">Pyper/commit/52a98d3</a>
+</p>
 
 The first step is to simply get Python calling a Rust function. On the Rust side we have a library crate using PyO3.
 
@@ -69,7 +71,9 @@ Running this outputs: `Rust result: 3`.
 
 ## Step 2: Async (Two Loops, One App)
 
-[Pyper/commit/6cf77c9](https://github.com/matthewhaynesonline/Pyper/commit/6cf77c94a4860bf3f29427aea6d81684b392a177)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/6cf77c94a4860bf3f29427aea6d81684b392a177">Pyper/commit/6cf77c9</a>
+</p>
 
 For CPU heavy calculations, that hello world example pretty much covers it. However, a web framework needs async to handle concurrent connections efficiently. This is where things get interesting and a little complex. Here's the rub: we actually need _two_ event loops. One in Rust ([`tokio`](https://github.com/tokio-rs/tokio)), one in Python ([`uvloop`](https://github.com/MagicStack/uvloop)). These need to work together without blocking each other or fighting over the GIL.
 
@@ -121,7 +125,9 @@ fn rust_sleep(py: Python) -> PyResult<Bound<PyAny>> {
 
 ## Step 3: HTTP with Hyper
 
-[Pyper/commit/f4dacd9](https://github.com/matthewhaynesonline/Pyper/commit/f4dacd981ea5133fe4f3d13403289b208c4558d5)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/f4dacd981ea5133fe4f3d13403289b208c4558d5">Pyper/commit/f4dacd9</a>
+</p>
 
 Now we'll add our HTTP layer and we'll build on [Hyper](https://github.com/hyperium/hyper), a lower level Rust HTTP library. Using Hyper, as opposed to a higher level framework like Axum, gives us maximum flexibility to wire up the Python integration without fighting framework conventions.
 
@@ -204,7 +210,9 @@ At this stage, all the route handlers still live on the Rust side, which is pret
 
 ## Step 4: Where's the Snake?
 
-[Pyper/commit/1a399fc](https://github.com/matthewhaynesonline/Pyper/commit/1a399fc917c2e53fe1fe5da5f04c4b90fb287568)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/1a399fc917c2e53fe1fe5da5f04c4b90fb287568">Pyper/commit/1a399fc</a>
+</p>
 
 Okay, now we're finally going to get something that looks like an actual framework. Rather than hardcoding routes in Rust, we expose an `add_route` function to Python. The Python code then defines routes using decorators, just like Flask or FastAPI:
 
@@ -333,7 +341,9 @@ A note on the Python locals capture (wtf is that): when the server starts, it ca
 
 ## Step 5: Static Files
 
-[Pyper/commit/212a136](https://github.com/matthewhaynesonline/Pyper/commit/212a13658ca39d59f662adfcacea437630dd4451)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/212a13658ca39d59f662adfcacea437630dd4451">Pyper/commit/212a136</a>
+</p>
 
 Serving CSS, images, and other static assets requires a small addition on the Rust side. We'll use a `StaticFilesConfig` that holds the URL prefix (e.g. `/static`) and the filesystem directory to serve from. This will be passed in at runtime since we don't want our Rust library code hardcoding filesystem paths (that probably won't work on other systems, etc.).
 
@@ -387,7 +397,9 @@ app = Pyper((static_routes_prefix, static_dir))
 
 ## Step 6: Templates with Handlebars
 
-[Pyper/commit/206df5b](https://github.com/matthewhaynesonline/Pyper/commit/206df5b4b6c6bc2dba0c6e9104f2c56a4f71bc02)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/206df5b4b6c6bc2dba0c6e9104f2c56a4f71bc02">Pyper/commit/206df5b</a>
+</p>
 
 For server side rendering, we'll use the [Handlebars](https://crates.io/crates/handlebars) crate. Why Handlebars and not something like [Askama](https://crates.io/crates/askama)? Well Askama uses strict type checking, and I figured the flexibility of Handlebars (as we're getting data from Python) would be easier to work with. Worse is better?
 
@@ -539,7 +551,9 @@ async def index(request: PyperRequest) -> dict:
 
 ## Recap: The Full Request/Response Flow
 
-[Pyper/commit/b76c6d9](https://github.com/matthewhaynesonline/Pyper/commit/b76c6d9b3be03434427da7f86bc69995997a6c9f)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/b76c6d9b3be03434427da7f86bc69995997a6c9f">Pyper/commit/b76c6d9</a>
+</p>
 
 Putting it all together, here's what happens from startup to serving a request:
 
@@ -564,7 +578,9 @@ Python stays clean and simple. Rust handles the all the hard stuff. Neither side
 
 ## Benchmarks: Does It Actually Work?
 
-[Pyper/commit/cd6c6b2](https://github.com/matthewhaynesonline/Pyper/commit/cd6c6b282780aa5d96606ea62be1286ce5c9b345)
+<p class="mb-2">
+<a href="https://github.com/matthewhaynesonline/Pyper/commit/cd6c6b282780aa5d96606ea62be1286ce5c9b345">Pyper/commit/cd6c6b2</a>
+</p>
 
 Let's find out if all that effort was even worth it. I should mention that benchmarks, especially the simple ones for this project, never really tell the full story. However, I do think these benchmarks are useful as a rough gauge.
 
