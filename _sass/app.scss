@@ -19,6 +19,14 @@ body {
   font-size: 1.2rem;
 }
 
+.full-search {
+  .search-trigger {
+    transform-origin: left center !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+}
+
 .main-container {
   padding-top: 2rem;
 
@@ -128,15 +136,6 @@ body {
     height: 90%;
   }
 
-  .heading {
-    font-size: 10vw;
-    max-width: 50vw;
-
-    @include media-breakpoint-down(md) {
-      font-size: 3.5rem;
-    }
-  }
-
   .search-trigger {
     transform-origin: left center !important;
   }
@@ -172,6 +171,15 @@ body {
     &.posts-lists {
       padding-top: 2rem;
     }
+  }
+}
+
+.font-max {
+  font-size: 10vw;
+  max-width: 50vw;
+
+  @include media-breakpoint-down(md) {
+    font-size: 3.5rem;
   }
 }
 

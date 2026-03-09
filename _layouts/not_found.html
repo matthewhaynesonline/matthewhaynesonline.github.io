@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
+  {% include html_head.html %}
+  <body class="404">
+    {% include header.html %}
+
+    <div class="container main-container">
+      <div class="row">
+        <div class="col">
+          <div class="mb-4">
+            <h1 class="font-max">{{ page.title | escape }}</h1>
+          </div>
+
+          {{ content }}
+        </div>
+      </div>
+    </div>
+
+    {% include footer.html %}
+  </body>
+</html>

@@ -6,11 +6,11 @@ title: "Hello"
 <div class="container main-container">
   <div class="row align-items-center h-100">
     <div class="col mt-max">
-      <h1 class="heading">
+      <h1 class="font-max">
         Matthew Haynes
       </h1>
       
-      <h4 class="sub-heading text-body-tertiary text-end mt-3">
+      <h4 class="text-body-tertiary text-end mt-3">
         Code &amp; Content
       </h4>
 
