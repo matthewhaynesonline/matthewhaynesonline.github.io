@@ -65,12 +65,22 @@ body {
     object-position: right;
 
     -webkit-mask-image:
-      linear-gradient(to top, transparent 0%, black 100%),
-      linear-gradient(45deg, transparent 10%, black 60%);
+      linear-gradient(
+        to top,
+        transparent 0%,
+        rgba(0, 0, 0, 0.075) 10%,
+        black 60%
+      ),
+      linear-gradient(45deg, transparent 5%, black 40%);
 
     mask-image:
-      linear-gradient(to top, transparent 0%, black 100%),
-      linear-gradient(45deg, transparent 10%, black 60%);
+      linear-gradient(
+        to top,
+        transparent 0%,
+        rgba(0, 0, 0, 0.075) 10%,
+        black 60%
+      ),
+      linear-gradient(45deg, transparent 5%, black 40%);
 
     -webkit-mask-composite: intersect;
     mask-composite: intersect;
