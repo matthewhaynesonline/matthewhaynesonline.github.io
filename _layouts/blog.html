@@ -8,23 +8,27 @@
       <div class="row">
         <div class="col">
           <a class="mb-3 d-inline-block" href="/posts">❮ Posts</a>
-          {% include title_date.html %}
         </div>
       </div>
     </div>
 
-   <div class="container main-container">
+   <div class="container main-container pt-3">
       <div class="row page-layout">
         <div class="col-12 col-md-4 col-lg-3 mb-4">
           <div id="in-page-nav" data-svelte-component="InPageNav"></div>
         </div>
 
-        <div class="col-12 col-md-8 col-lg-9" id="main-content">
-        
-          {{ content }}
+        <div class="col-12 col-md-8 col-lg-9 d-flex justify-content-center">
+          <div id="main-content">
+            <div class="mb-5">
+            {% include title_date.html %}
+            </div>
 
-          <div class="mb-3" data-svelte-component="BackToTop"></div>
-          {% include page_prev_next.html %}
+            {{ content }}
+
+            <div class="mb-3" data-svelte-component="BackToTop"></div>
+            {% include page_prev_next.html %}
+          </div>
         </div>
       </div>
     </div>

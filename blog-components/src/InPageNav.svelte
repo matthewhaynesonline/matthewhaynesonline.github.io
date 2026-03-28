@@ -157,6 +157,16 @@
     font-size: 0.9rem;
   }
 
+  .in-page-nav-wrapper {
+    opacity: 0.25;
+
+    transition: all 300ms ease-out;
+  }
+
+  .in-page-nav-wrapper:hover {
+    opacity: 1;
+  }
+
   .nav-item.level-3 {
     padding-left: 1rem;
   }

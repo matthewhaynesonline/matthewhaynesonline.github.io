@@ -63,6 +63,17 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: right;
+
+    -webkit-mask-image:
+      linear-gradient(to top, transparent 0%, black 100%),
+      linear-gradient(45deg, transparent 10%, black 60%);
+
+    mask-image:
+      linear-gradient(to top, transparent 0%, black 100%),
+      linear-gradient(45deg, transparent 10%, black 60%);
+
+    -webkit-mask-composite: intersect;
+    mask-composite: intersect;
   }
 }
 
@@ -153,6 +164,10 @@ body {
 }
 
 #main-content {
+  max-width: 768px;
+
+  width: 100%;
+
   h2 {
     margin-top: 3rem;
   }
