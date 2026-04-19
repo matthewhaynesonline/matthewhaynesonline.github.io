@@ -6,7 +6,27 @@ import Search from "./Search.svelte";
 import ThemeToggle from "./ThemeToggle.svelte";
 import BackToTop from "./lib/BackToTop.svelte";
 
-const components = { InPageNav, Search, ThemeToggle, BackToTop };
+import AxiomGoodEvilAvg from "./lib/axiom_viz/GoodEvilAvg.svelte";
+import AxiomAxisProjection from "./lib/axiom_viz/AxisProjection.svelte";
+import AxiomTanh from "./lib/axiom_viz/Tanh.svelte";
+import AxiomZScore from "./lib/axiom_viz/ZScore.svelte";
+import AxiomSentimentConsensus from "./lib/axiom_viz/app/scatter/SentimentConsensus.svelte";
+import AxiomHeatmap from "./lib/axiom_viz/app/Heatmap.svelte";
+import AxiomValueSystems from "./lib/axiom_viz/app/ValueSystems.svelte";
+
+const components = {
+  InPageNav,
+  Search,
+  ThemeToggle,
+  BackToTop,
+  AxiomGoodEvilAvg,
+  AxiomAxisProjection,
+  AxiomTanh,
+  AxiomZScore,
+  AxiomSentimentConsensus,
+  AxiomHeatmap,
+  AxiomValueSystems,
+};
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const componentTargetElements = document.querySelectorAll(

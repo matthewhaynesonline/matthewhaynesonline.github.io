@@ -122,6 +122,10 @@ body {
   font-size: 1.2rem;
 }
 
+.reversefootnote {
+  font-family: sans-serif;
+}
+
 // =============================================================================
 // Auto anchor Links
 // =============================================================================
@@ -175,11 +179,115 @@ body {
 
 #main-content {
   max-width: 768px;
-
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  // Compensate for the nav column to optically center in the viewport.
+  @include media-breakpoint-up(md) {
+    margin-left: 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 2%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    margin-left: 5%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    margin-left: 7%;
+  }
 
   h2 {
     margin-top: 3rem;
+  }
+}
+
+// =============================================================================
+// Essays
+// =============================================================================
+
+$banner-text-shadow-size: 1px;
+$banner-text-shadow-size-neg: -1px;
+$banner-text-shadow-color: rgba($body-bg, 0.35);
+$banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
+
+.essay {
+  .home-link {
+    font-family: $font-family-serif;
+  }
+
+  nav {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .banner {
+    aspect-ratio: auto !important;
+    max-height: none;
+    position: relative;
+  }
+
+  .banner-text {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    // left: 50%;
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+
+    display: inline-block;
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+
+    color: $body-color;
+
+    @include media-breakpoint-down(md) {
+      bottom: auto;
+    }
+
+    [data-bs-theme="dark"] & {
+      color: $body-color-dark;
+
+      h1 {
+        text-shadow:
+          $banner-text-shadow-size-neg $banner-text-shadow-size-neg 0
+            $banner-text-shadow-color-dark,
+          $banner-text-shadow-size $banner-text-shadow-size-neg 0
+            $banner-text-shadow-color-dark,
+          $banner-text-shadow-size-neg $banner-text-shadow-size 0
+            $banner-text-shadow-color-dark,
+          $banner-text-shadow-size $banner-text-shadow-size 0
+            $banner-text-shadow-color-dark;
+      }
+    }
+
+    h1 {
+      font-size: 5rem;
+
+      // -webkit-text-stroke: $banner-text-shadow-size rgba(0, 0, 0, 0.8);
+
+      text-shadow:
+        $banner-text-shadow-size-neg $banner-text-shadow-size-neg 0
+          $banner-text-shadow-color,
+        $banner-text-shadow-size $banner-text-shadow-size-neg 0
+          $banner-text-shadow-color,
+        $banner-text-shadow-size-neg $banner-text-shadow-size 0
+          $banner-text-shadow-color,
+        $banner-text-shadow-size $banner-text-shadow-size 0
+          $banner-text-shadow-color;
+
+      @include media-breakpoint-down(md) {
+        font-size: 2.25rem;
+      }
+    }
   }
 }
 

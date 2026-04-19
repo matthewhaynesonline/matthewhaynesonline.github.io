@@ -1,0 +1,19 @@
+{
+  "scale": {
+    "min": -1.0,
+    "max": 1.0
+  },
+  "theme": {
+    "numDecimalsDisplay": 2,
+    "headingCssClasses": "text-secondary-emphasis text-uppercase",
+    "cssVars": {
+      "colors": {
+        "positive": "--color-positive",
+        "negative": "--color-negative",
+        "neutral": "--color-neutral",
+        "muted": "--color-muted",
+        "fallbackValue": "#000000"
+      }
+    }
+  }
+}

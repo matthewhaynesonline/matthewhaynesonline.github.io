@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
+  {% include html_head.html %}
+  <body class="essay">
+
+    <nav data-bs-theme="light">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="home-link text-body-emphasis" href="/">MH</a>
+      <div data-svelte-component="ThemeToggle"></div>
+    </div>
+  </div>
+  </nav>
+
+  <div class="banner">
+    <img src="{{ page.banner_img }}" alt="Banner img" />
+
+    <div class="banner-text">
+      <h1 >{{ page.title }}</h1>
+
+        <h4 class="text-body-tertiary">
+          <small> {{ page.date | date: "%b %d, %Y" }} </small>
+        </h4>
+      </div>
+  </div>
+
+   <div class="container-fluid main-container mt-2">
+      <div class="row page-layout">
+        <div class="col-12 col-md-4 col-lg-3 mb-4">
+          <div id="in-page-nav" data-svelte-component="InPageNav"></div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9 d-flex justify-content-center">
+          <div id="main-content">
+            
+
+            {{ content }}
+
+            <div class="mb-3" data-svelte-component="BackToTop"></div>
+            {% include page_prev_next.html %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include footer.html %}
+  </body>
+</html>

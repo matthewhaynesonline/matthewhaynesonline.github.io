@@ -1,0 +1,112 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
+  <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
+  <link href="{{ '/feed.xml' | absolute_url }}" rel="self" type="application/atom+xml" />
+  <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html"{% if site.lang %} hreflang="{{ site.lang }}"{% endif %} />
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>{{ '/feed.xml' | absolute_url | xml_escape }}</id>
+
+  {% assign title = site.title | default: site.name %}
+  {% if title %}
+    <title type="html">{{ title | smartify | xml_escape }}</title>
+  {% endif %}
+
+  {% if site.description %}
+    <subtitle>{{ site.description | xml_escape }}</subtitle>
+  {% endif %}
+
+  {% if site.feed.icon %}
+    {% assign feed_icon = site.feed.icon %}
+    {% unless feed_icon contains "://" %}
+      {% assign feed_icon = feed_icon | absolute_url %}
+    {% endunless %}
+    <icon>{{ feed_icon | xml_escape }}</icon>
+  {% endif %}
+
+  {% if site.feed.logo %}
+    {% assign feed_logo = site.feed.logo %}
+    {% unless feed_logo contains "://" %}
+      {% assign feed_logo = feed_logo | absolute_url %}
+    {% endunless %}
+    <logo>{{ feed_logo | xml_escape }}</logo>
+  {% endif %}
+
+  {% if site.author %}
+    <author>
+      <name>{{ site.author.name | default: site.author | xml_escape }}</name>
+      {% if site.author.email %}
+        <email>{{ site.author.email | xml_escape }}</email>
+      {% endif %}
+      {% if site.author.uri %}
+        <uri>{{ site.author.uri | xml_escape }}</uri>
+      {% endif %}
+    </author>
+  {% endif %}
+
+  {% assign items = site.posts | concat: site.essays %}
+  {% assign items = items | where_exp: "item", "item.draft != true" %}
+  {% assign items = items | sort: "date" | reverse %}
+  {% assign posts_limit = site.feed.posts_limit | default: 10 %}
+
+  {% for item in items limit: posts_limit %}
+    <entry{% if item.lang %} xml:lang="{{ item.lang }}"{% endif %}>
+      {% assign item_title = item.title | smartify | strip_html | normalize_whitespace | xml_escape %}
+      <title type="html">{{ item_title }}</title>
+
+      <link href="{{ item.url | absolute_url }}" rel="alternate" type="text/html" title="{{ item_title }}" />
+      <published>{{ item.date | date_to_xmlschema }}</published>
+      <updated>{{ item.last_modified_at | default: item.date | date_to_xmlschema }}</updated>
+      <id>{{ item.id | absolute_url | xml_escape }}</id>
+
+      {% assign excerpt_only = item.feed.excerpt_only | default: site.feed.excerpt_only %}
+      {% unless excerpt_only %}
+        <content type="html" xml:base="{{ item.url | absolute_url | xml_escape }}"><![CDATA[{{ item.content | strip }}]]></content>
+      {% endunless %}
+
+      {% assign item_author = item.author | default: item.authors[0] | default: site.author %}
+      {% assign item_author = site.data.authors[item_author] | default: item_author %}
+      {% assign item_author_email = item_author.email | default: nil %}
+      {% assign item_author_uri = item_author.uri | default: nil %}
+      {% assign item_author_name = item_author.name | default: item_author %}
+
+      <author>
+        <name>{{ item_author_name | default: "" | xml_escape }}</name>
+        {% if item_author_email %}
+          <email>{{ item_author_email | xml_escape }}</email>
+        {% endif %}
+        {% if item_author_uri %}
+          <uri>{{ item_author_uri | xml_escape }}</uri>
+        {% endif %}
+      </author>
+
+      {% if item.category %}
+        <category term="{{ item.category | xml_escape }}" />
+      {% elsif item.categories %}
+        {% for category in item.categories %}
+          <category term="{{ category | xml_escape }}" />
+        {% endfor %}
+      {% endif %}
+
+      {% for tag in item.tags %}
+        <category term="{{ tag | xml_escape }}" />
+      {% endfor %}
+
+      {% assign item_summary = item.description | default: item.excerpt %}
+      {% if item_summary and item_summary != empty %}
+        <summary type="html"><![CDATA[{{ item_summary | strip_html | normalize_whitespace }}]]></summary>
+      {% endif %}
+
+      {% assign item_image = item.image.path | default: item.image %}
+      {% if item_image %}
+        {% unless item_image contains "://" %}
+          {% assign item_image = item_image | absolute_url %}
+        {% endunless %}
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ item_image | xml_escape }}" />
+        <media:content medium="image" url="{{ item_image | xml_escape }}" xmlns:media="http://search.yahoo.com/mrss/" />
+      {% endif %}
+    </entry>
+  {% endfor %}
+</feed>

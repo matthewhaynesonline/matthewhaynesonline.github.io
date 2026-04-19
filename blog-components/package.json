@@ -22,6 +22,10 @@
     "vite": "^8.0.0-beta.13"
   },
   "dependencies": {
-    "fuse.js": "^7.1.0"
+    "arquero": "^8.0.3",
+    "d3-scale": "^4.0.2",
+    "d3-scale-chromatic": "^3.1.0",
+    "fuse.js": "^7.1.0",
+    "svelteplot": "^0.11.1"
   }
 }

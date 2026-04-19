@@ -6,11 +6,14 @@ author:
 timezone: America/New_York
 kramdown:
   auto_ids: true
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  # - github-pages
+collections:
+  essays:
+    output: true
 exclude:
   - "README.md"
   - "**/README.md"
   - blog-components
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  # - github-pages
