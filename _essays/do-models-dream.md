@@ -18,7 +18,7 @@ Embedding models underpin all of these systems. Their job is to encode the meani
 
 {% include yt_embed.html %}
 
-<em>Additionally, <a href="https://raw.githubusercontent.com/matthewhaynesonline/Axiom/refs/heads/main/paper/paper.pdf">a research paper</a> is available for a more in depth look at the project.</em>
+<em>Additionally, <a href="https://raw.githubusercontent.com/matthewhaynesonline/Axiom/refs/heads/main/paper/paper.pdf">a research paper</a> and a <a href="https://huggingface.co/collections/matthewhaynesonline/axiom">collection on Hugging Face</a> is available for a more in depth look at the project.</em>
 
 So: do these models have ingrained value systems? And if they do, does the answer change depending on where the model was trained? The short answer is yes to both and it turns out the disagreements _between_ models are as interesting as the findings within any single model.
 
