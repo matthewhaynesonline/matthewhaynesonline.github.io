@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BackToTop from "./lib/BackToTop.svelte";
+  import BackToTop from "./BackToTop.svelte";
 
   interface Heading {
     id: string;

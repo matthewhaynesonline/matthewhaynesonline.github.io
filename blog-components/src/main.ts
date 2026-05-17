@@ -1,10 +1,10 @@
 import { mount } from "svelte";
 import "./app.css";
 
-import InPageNav from "./InPageNav.svelte";
-import Search from "./Search.svelte";
-import ThemeToggle from "./ThemeToggle.svelte";
-import BackToTop from "./lib/BackToTop.svelte";
+import InPageNav from "./lib/page_elements/InPageNav.svelte";
+import Search from "./lib/page_elements/Search.svelte";
+import ThemeToggle from "./lib/page_elements/ThemeToggle.svelte";
+import BackToTop from "./lib/page_elements/BackToTop.svelte";
 
 import AxiomGoodEvilAvg from "./lib/axiom_viz/GoodEvilAvg.svelte";
 import AxiomAxisProjection from "./lib/axiom_viz/AxisProjection.svelte";
@@ -13,6 +13,9 @@ import AxiomZScore from "./lib/axiom_viz/ZScore.svelte";
 import AxiomSentimentConsensus from "./lib/axiom_viz/app/scatter/SentimentConsensus.svelte";
 import AxiomHeatmap from "./lib/axiom_viz/app/Heatmap.svelte";
 import AxiomValueSystems from "./lib/axiom_viz/app/ValueSystems.svelte";
+
+import ToolDemoAddSub from "./lib/tool_lie/ToolDemoAddSub.svelte";
+import ToolDemoDialog from "./lib/tool_lie/ToolDemoDialog.svelte";
 
 const components = {
   InPageNav,
@@ -26,6 +29,8 @@ const components = {
   AxiomSentimentConsensus,
   AxiomHeatmap,
   AxiomValueSystems,
+  ToolDemoAddSub,
+  ToolDemoDialog,
 };
 
 document.addEventListener("DOMContentLoaded", (): void => {

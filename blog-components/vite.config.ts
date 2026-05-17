@@ -11,7 +11,7 @@ export default defineConfig({
       input: "src/main.js",
       output: {
         entryFileNames: "bundle.js",
-        assetFileNames: "bundle.css",
+        assetFileNames: "bundle.[ext]",
       },
     },
   },
