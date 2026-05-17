@@ -14,9 +14,9 @@ body {
   background-color: $body-bg-dark;
 }
 
-.navbar-brand {
-  // font-family: $font-family-serif;
+.home-link {
   font-size: 1.7rem;
+  font-weight: 600 !important;
 }
 
 .full-search {
@@ -227,10 +227,6 @@ $banner-text-shadow-color: rgba($body-bg, 0.35);
 $banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
 
 .essay {
-  .home-link {
-    font-size: 1.7rem;
-  }
-
   nav {
     position: absolute;
     width: 100%;
