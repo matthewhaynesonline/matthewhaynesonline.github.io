@@ -15,8 +15,8 @@ body {
 }
 
 .navbar-brand {
-  font-family: $font-family-serif;
-  font-size: 1.2rem;
+  // font-family: $font-family-serif;
+  font-size: 1.7rem;
 }
 
 .full-search {
@@ -166,6 +166,18 @@ body {
   }
 }
 
+.word-mark {
+  font-size: 20vh;
+  // max-width: 50vw;
+  margin-bottom: 5rem;
+
+  @include media-breakpoint-down(md) {
+    font-size: 5rem;
+
+    margin-bottom: 2rem;
+  }
+}
+
 // =============================================================================
 // Posts
 // =============================================================================
@@ -216,7 +228,7 @@ $banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
 
 .essay {
   .home-link {
-    font-family: $font-family-serif;
+    font-size: 1.7rem;
   }
 
   nav {
@@ -294,6 +306,12 @@ $banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
 // =============================================================================
 // Utilities
 // =============================================================================
+
+.word-mark-font {
+  font-family: $font-family-word-mark;
+  font-weight: 400;
+  font-style: normal;
+}
 
 .mt-max {
   padding-top: 8rem;

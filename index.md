@@ -6,7 +6,7 @@ title: "Hello"
 <div class="container main-container">
   <div class="row align-items-center h-100">
     <div class="col mt-max">
-      <h1 class="font-max">
+      <h1 class="word-mark word-mark-font">
         Matthew Haynes
       </h1>
       
