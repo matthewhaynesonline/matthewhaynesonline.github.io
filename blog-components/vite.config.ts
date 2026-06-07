@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "../assets/dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: "src/main.js",
+      input: "src/main.ts",
       output: {
         entryFileNames: "bundle.js",
         assetFileNames: "bundle.[ext]",

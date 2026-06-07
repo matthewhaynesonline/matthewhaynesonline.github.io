@@ -205,10 +205,6 @@ body {
   }
 
   @include media-breakpoint-up(xl) {
-    margin-left: 5%;
-  }
-
-  @include media-breakpoint-up(xl) {
     margin-left: 7%;
   }
 
@@ -309,7 +305,7 @@ $banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
   font-style: normal;
 }
 
-.mt-max {
+.pt-max {
   padding-top: 8rem;
 
   @include media-breakpoint-down(md) {

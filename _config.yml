@@ -13,6 +13,9 @@ exclude:
   - "README.md"
   - "**/README.md"
   - blog-components
+  - Gemfile
+  - Gemfile.lock
+  - Makefile
 plugins:
   - jekyll-feed
   - jekyll-seo-tag

@@ -1,0 +1,23 @@
+{% assign container_class = include.container_class | default: "container main-container pt-3" %}
+ <div class="{{ container_class }}">
+    <div class="row page-layout">
+      <div class="col-12 col-md-4 col-lg-3 mb-4">
+        <div id="in-page-nav" data-svelte-component="InPageNav"></div>
+      </div>
+
+      <div class="col-12 col-md-8 col-lg-9 d-flex justify-content-center">
+        <div id="main-content">
+          {% if include.show_title %}
+            <div class="mb-5">
+            {% include title_date.html %}
+            </div>
+          {% endif %}
+
+          {{ content }}
+
+          <div class="mb-3" data-svelte-component="BackToTop"></div>
+          {% include page_prev_next.html %}
+        </div>
+      </div>
+    </div>
+  </div>

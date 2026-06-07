@@ -4,7 +4,7 @@ layout: none
 [
   {% for post in site.posts %}
     {
-      "title"    : "{{ post.title | escape | strip_html }}",
+      "title"    : "{{ post.title | strip_html | escape }}",
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
       "url"      : "{{ site.baseurl }}{{ post.url }}",
@@ -14,7 +14,7 @@ layout: none
   {% endfor %},
   {% for post in site.essays %}
     {
-      "title"    : "{{ post.title | strip_html }}",
+      "title"    : "{{ post.title | strip_html | escape }}",
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
       "url"      : "{{ site.baseurl }}{{ post.url }}",

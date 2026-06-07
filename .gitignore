@@ -13,6 +13,6 @@ vendor/cache/
 .DS_Store
 
 # Svelte
-assets/dist
+assets/dist/
 
 .local/*

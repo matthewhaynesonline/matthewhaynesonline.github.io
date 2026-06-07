@@ -155,11 +155,7 @@
 
   .in-page-nav-wrapper {
     font-size: 0.9rem;
-  }
-
-  .in-page-nav-wrapper {
     opacity: 0.25;
-
     transition: all 300ms ease-out;
   }
 

@@ -5,7 +5,7 @@ title: "Hello"
 
 <div class="container main-container">
   <div class="row align-items-center h-100">
-    <div class="col mt-max">
+    <div class="col pt-max">
       <h1 class="word-mark word-mark-font">
         Matthew Haynes
       </h1>
@@ -14,21 +14,10 @@ title: "Hello"
         Code &amp; Content
       </h4>
 
-      <div class="mt-max border-bottom pb-5">
+      <div class="pt-max border-bottom pb-5">
       <h4 class="mb-3">Featured</h4>
       {% for post in site.essays limit:1 %}
-
-            <div class="mb-3">
-
-  <h3 class="post-title h5">
-    <a href="{{ post.url }}">{{ post.title | strip_html }}</a>
-  </h3>
-  <h6 class="post-date text-body-tertiary">
-    <small> {{ post.date | date: "%b %d, %Y" }} </small>
-  </h6>
-  {{ post.excerpt | strip_html }}
-</div>
-
+          {% include post_teaser.html %}
         {% endfor %}
         <a href="/essays">More essays</a>
         </div>

@@ -3,7 +3,7 @@ layout: default
 title: "Posts"
 ---
 
-<ul class="list-unstyled posts-list mt-5">
+<ul class="list-unstyled posts-lists mt-5">
   {% for post in site.posts %}
     <li>
       {% include post_teaser.html %}
