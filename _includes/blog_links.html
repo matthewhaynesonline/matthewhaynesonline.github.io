@@ -1,15 +1,19 @@
-{% if page.yt_id %}
-<em>
-  Video guide:
-  <a href="https://youtu.be/{{ page.yt_id }}">
-    <span class="text-break text-wrap">https://youtu.be/{{ page.yt_id }}</span>
+{% if page.yt_id or page.gh_url %}
+<div class="callout-cards">
+  {% if page.yt_id %}
+  <a class="callout-card" href="https://youtu.be/{{ page.yt_id }}">
+    <div class="callout-kicker callout-kicker--accent">▶ Watch</div>
+    <div class="callout-title">The video companion</div>
+    <div class="callout-url">youtu.be/{{ page.yt_id }}</div>
   </a>
-</em>
-{% endif%} {% if page.gh_url %}
-<em>
-  Code:
-  <a href="{{ page.gh_url }}">
-    <span class="text-break text-wrap">{{ page.gh_url }}</span>
+  {% endif %}
+
+  {% if page.gh_url %}
+  <a class="callout-card" href="{{ page.gh_url }}">
+    <div class="callout-kicker">&lt;/&gt; Code</div>
+    <div class="callout-title">Runnable code on GitHub</div>
+    <div class="callout-url">{{ page.gh_url | remove: "https://" }}</div>
   </a>
-</em>
-{% endif%}
+  {% endif %}
+</div>
+{% endif %}

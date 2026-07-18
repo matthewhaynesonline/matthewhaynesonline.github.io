@@ -1,19 +1,15 @@
-<nav class="navbar py-1" data-bs-theme="dark">
-  <div class="container d-block d-md-none">
-    <div class="d-flex align-items-center justify-content-between">
-      <a class="navbar-brand me-0 word-mark-font home-link" href="/">MH</a>
+{% assign masthead_class = include.masthead_class | default: "" %}
+<header class="masthead {{ masthead_class }}">
+  <div class="masthead-inner">
+    {% unless include.hide_brand %}
+    <a class="masthead-brand link-plain" href="/">Matthew Haynes</a>
+    {% endunless %}
+
+    <div class="masthead-nav">
+      <a class="link-ui" href="/essays">Essays</a>
+      <a class="link-ui" href="/posts">Posts</a>
       <div data-svelte-component="Search"></div>
       <div data-svelte-component="ThemeToggle"></div>
     </div>
   </div>
-
-  <div class="container d-none d-md-flex">
-    <a class="navbar-brand word-mark-font home-link" href="/">MH</a>
-    <div class="d-flex">
-      <div data-svelte-component="Search"></div>
-      <div data-svelte-component="ThemeToggle"></div>
-    </div>
-  </div>
-</nav>
-
-{% include banner_img.html %}
+</header>

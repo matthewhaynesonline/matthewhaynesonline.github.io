@@ -2,17 +2,28 @@
 <html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
   {% include html_head.html %}
   <body>
-    {% include header.html %}
+    {% comment %}
+      Like the essay hero: the smoky masthead sits on top of the banner
+      image (when present) and fades down into the page surface.
+    {% endcomment %}
+    {% if page.banner_img %}
+    <div class="post-hero">
+      {% include banner_img.html %}
+      {% include header.html masthead_class="masthead--smoke" %}
+    </div>
+    {% else %}
+    {% include header.html masthead_class="masthead--smoke" %}
+    {% endif %}
 
-    <div class="container mt-4">
+    <div class="container-fluid mt-2">
       <div class="row">
         <div class="col">
-          <a class="mb-3 d-inline-block" href="/posts">❮ Posts</a>
+          <a class="back-link link-ui mb-3 d-inline-block" href="/posts">← Posts</a>
         </div>
       </div>
     </div>
 
-    {% include two_column_content.html show_title=true %}
+    {% include two_column_content.html show_title=true container_class="container-fluid main-container pt-0" %}
 
     {% include footer.html %}
   </body>

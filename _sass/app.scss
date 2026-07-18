@@ -4,34 +4,148 @@
 
 body {
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 // =============================================================================
-// Page Elements
+// Content helpers (used inside post/essay markdown)
 // =============================================================================
 
-.navbar {
-  background-color: $body-bg-dark;
+.highlighter-rouge {
+  margin-bottom: $paragraph-margin-bottom;
 }
 
-.home-link {
-  font-size: 1.7rem;
-  font-weight: 600 !important;
-}
-
-.full-search {
-  .search-trigger {
-    transform-origin: left center !important;
-    max-width: 100% !important;
-    transform: none !important;
+.highlight {
+  & > pre {
+    margin-bottom: 0;
+    padding: 0;
   }
 }
 
-.main-container {
-  padding-top: 2rem;
+// Inline code
+code.highlighter-rouge {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--accent);
+  background: var(--surface-raised);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
 
+.reversefootnote {
+  font-family: var(--font-mono);
+}
+
+.text-bg-callout {
+  color: $body-color-dark !important;
+  background-color: $callout-bg !important;
+
+  a {
+    color: $callout-accent;
+  }
+}
+
+// YouTube embeds
+.ratio {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-hairline);
+}
+
+img.img-fluid {
+  border-radius: 8px;
+}
+
+// =============================================================================
+// Auto anchor Links
+// =============================================================================
+
+.anchor-link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
+    content: " #";
+    font-size: 0.8em;
+    opacity: 0;
+    margin-left: 0.3rem;
+    transition: opacity 0.15s ease-in-out;
+  }
+
+  &:hover {
+    text-decoration: underline;
+
+    &::after {
+      opacity: 0.5;
+    }
+  }
+}
+
+// =============================================================================
+// Reading pages
+// =============================================================================
+
+#main-content {
+  max-width: var(--measure-read);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  // Compensate for the nav column to optically center in the viewport.
   @include media-breakpoint-up(md) {
-    padding-top: 3rem;
+    margin-left: 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 2%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    margin-left: 7%;
+  }
+}
+
+#in-page-nav {
+  @include media-breakpoint-up(md) {
+    position: sticky;
+    top: 3rem;
+    right: 0;
+    z-index: 2;
+    height: calc(100vh - 5rem);
+    overflow-y: auto;
+  }
+}
+
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+// =============================================================================
+// Post banner — wide strip that fades into the page surface
+// =============================================================================
+
+// Wraps the banner + smoky masthead so the nav overlays the image and
+// blends down into the page (same treatment as the essay hero).
+.post-hero {
+  position: relative;
+
+  .masthead {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  // Keep the strip tall enough that the overlaid nav stays on the image
+  // even at narrow widths.
+  .banner {
+    min-height: 110px;
   }
 }
 
@@ -87,214 +201,6 @@ body {
   }
 }
 
-.highlighter-rouge {
-  margin-bottom: $paragraph-margin-bottom;
-}
-
-.highlight {
-  & > pre {
-    margin-bottom: 0;
-    padding: 0;
-  }
-}
-
-.page-nav-link {
-  display: inline-block;
-  max-width: 300px;
-
-  @include media-breakpoint-down(md) {
-    max-width: 200px;
-  }
-}
-
-#in-page-nav {
-  @include media-breakpoint-up(md) {
-    position: sticky;
-    top: 5rem;
-    right: 0;
-    z-index: 2;
-    height: calc(100vh - 7rem);
-    overflow-y: auto;
-  }
-}
-
-.footer {
-  font-size: 1.2rem;
-}
-
-.reversefootnote {
-  font-family: sans-serif;
-}
-
-// =============================================================================
-// Auto anchor Links
-// =============================================================================
-
-.anchor-link {
-  color: inherit;
-  text-decoration: none;
-  position: relative;
-
-  &::after {
-    content: " #";
-    font-size: 0.8em;
-    opacity: 0;
-    margin-left: 0.3rem;
-    transition: opacity 0.15s ease-in-out;
-  }
-
-  &:hover {
-    text-decoration: underline;
-
-    &::after {
-      opacity: 0.5;
-    }
-  }
-}
-
-// =============================================================================
-// Home Page
-// =============================================================================
-
-.home {
-  .main-container {
-    height: 90%;
-  }
-
-  .search-trigger {
-    transform-origin: left center !important;
-  }
-}
-
-.word-mark {
-  font-size: 20vh;
-  // max-width: 50vw;
-  margin-bottom: 5rem;
-
-  @include media-breakpoint-down(md) {
-    font-size: 5rem;
-
-    margin-bottom: 2rem;
-  }
-}
-
-// =============================================================================
-// Posts
-// =============================================================================
-
-.posts-lists {
-  .post-date {
-    font-family: $font-family-sans-serif;
-    font-size: 1rem;
-  }
-}
-
-#main-content {
-  max-width: 768px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-
-  // Compensate for the nav column to optically center in the viewport.
-  @include media-breakpoint-up(md) {
-    margin-left: 0;
-  }
-
-  @include media-breakpoint-up(lg) {
-    margin-left: 2%;
-  }
-
-  @include media-breakpoint-up(xl) {
-    margin-left: 7%;
-  }
-
-  h2 {
-    margin-top: 3rem;
-  }
-}
-
-// =============================================================================
-// Essays
-// =============================================================================
-
-$banner-text-shadow-size: 1px;
-$banner-text-shadow-size-neg: -1px;
-$banner-text-shadow-color: rgba($body-bg, 0.35);
-$banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
-
-.essay {
-  nav {
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-  }
-
-  .banner {
-    aspect-ratio: auto !important;
-    max-height: none;
-    position: relative;
-  }
-
-  .banner-text {
-    position: absolute;
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
-    // left: 50%;
-    // top: 50%;
-    // transform: translate(-50%, -50%);
-    z-index: 1;
-    text-align: center;
-
-    display: inline-block;
-    width: 100%;
-    max-width: 1000px;
-    padding: 2rem;
-
-    color: $body-color;
-
-    @include media-breakpoint-down(md) {
-      bottom: auto;
-    }
-
-    [data-bs-theme="dark"] & {
-      color: $body-color-dark;
-
-      h1 {
-        text-shadow:
-          $banner-text-shadow-size-neg $banner-text-shadow-size-neg 0
-            $banner-text-shadow-color-dark,
-          $banner-text-shadow-size $banner-text-shadow-size-neg 0
-            $banner-text-shadow-color-dark,
-          $banner-text-shadow-size-neg $banner-text-shadow-size 0
-            $banner-text-shadow-color-dark,
-          $banner-text-shadow-size $banner-text-shadow-size 0
-            $banner-text-shadow-color-dark;
-      }
-    }
-
-    h1 {
-      font-size: 5rem;
-
-      // -webkit-text-stroke: $banner-text-shadow-size rgba(0, 0, 0, 0.8);
-
-      text-shadow:
-        $banner-text-shadow-size-neg $banner-text-shadow-size-neg 0
-          $banner-text-shadow-color,
-        $banner-text-shadow-size $banner-text-shadow-size-neg 0
-          $banner-text-shadow-color,
-        $banner-text-shadow-size-neg $banner-text-shadow-size 0
-          $banner-text-shadow-color,
-        $banner-text-shadow-size $banner-text-shadow-size 0
-          $banner-text-shadow-color;
-
-      @include media-breakpoint-down(md) {
-        font-size: 2.25rem;
-      }
-    }
-  }
-}
-
 // =============================================================================
 // Utilities
 // =============================================================================
@@ -305,36 +211,22 @@ $banner-text-shadow-color-dark: rgba($body-bg-dark, 0.35);
   font-style: normal;
 }
 
-.pt-max {
-  padding-top: 8rem;
-
-  @include media-breakpoint-down(md) {
-    padding-top: 4rem;
-
-    &.posts-lists {
-      padding-top: 2rem;
-    }
-  }
-}
-
-.font-max {
-  font-size: 10vw;
-  max-width: 50vw;
-
-  @include media-breakpoint-down(md) {
-    font-size: 3.5rem;
-  }
-}
-
 .scale-80 {
   transform: scale(80%) !important;
 }
 
-.text-bg-callout {
-  color: $body-color-dark !important;
-  background-color: $callout-bg !important;
+.full-search {
+  .search-trigger {
+    transform-origin: left center !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+}
 
-  a {
-    color: $callout-accent;
+.main-container {
+  padding-top: 2rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 3rem;
   }
 }

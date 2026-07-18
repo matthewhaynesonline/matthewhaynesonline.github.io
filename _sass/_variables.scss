@@ -1,13 +1,53 @@
-$primary: #dc3545;
+// =============================================================================
+// Studio Haynes — Bootstrap variable overrides
+// Warm print-magazine editorial system: cream paper, warm ink, cinnabar accent.
+// Raw palette values live in _editorial.scss as CSS custom properties; these
+// Bootstrap variables are kept in sync so BS components blend in.
+// =============================================================================
 
-$body-bg: #f6f6f2;
-$body-color: #22272c;
+// --- Accent ---
+$primary: #c4362b; // cinnabar
 
-$body-color-dark: $body-bg;
-$body-bg-dark: $body-color;
+// --- Light: paper & ink ---
+$body-bg: #f4f1ea; // paper
+$body-color: #2a2825; // ink soft (prose)
+$body-secondary-color: #57544c; // warm-600
+$body-tertiary-color: #76716a; // warm-500
+$body-emphasis-color: #1c1b19; // ink
+
+$border-color: #ddd6c8; // line
+
+// Warm subtle surfaces (cards, alerts, form controls, badges)
+$light: #efe9dd;
+$dark: #1c1b19;
+$body-secondary-bg: #e9e3d5;
+$body-tertiary-bg: #efe9dd;
+$body-secondary-bg-dark: #2a2620;
+$body-tertiary-bg-dark: #221f19;
+
+// --- Dark: warm slate (never cool gray) ---
+$body-bg-dark: #181612;
+$body-color-dark: #ece6d8;
+$body-secondary-color-dark: #968f80;
+$body-tertiary-color-dark: #968f80;
+$body-emphasis-color-dark: #f3eee2;
+$border-color-dark: #322e27;
+$link-color-dark: #df5247; // cinnabar bright
+$link-hover-color-dark: #df5247;
 
 $callout-bg: #c55b65;
 $callout-accent: #560009;
+
+// --- Type ---
+$font-family-serif: "Newsreader", Georgia, "Times New Roman", serif;
+$font-family-monospace:
+  "JetBrains Mono",
+  ui-monospace,
+  "SF Mono",
+  SFMono-Regular,
+  Menlo,
+  Consolas,
+  monospace;
 
 $font-family-sans-serif:
   "Inter",
@@ -16,34 +56,43 @@ $font-family-sans-serif:
   "Segoe UI",
   Roboto,
   "Helvetica Neue",
-  "Noto Sans",
-  "Liberation Sans",
   Arial,
-  sans-serif,
-  "Apple Color Emoji",
-  "Segoe UI Emoji",
-  "Segoe UI Symbol",
-  "Noto Color Emoji" !default;
+  sans-serif;
+
+// Body copy stays sans for readability; Newsreader is reserved for
+// display type, deks, and pull quotes (see _editorial.scss).
+$font-family-base: $font-family-sans-serif;
+$font-family-word-mark: "Dynalight", "Snell Roundhand", "Brush Script MT",
+  cursive;
+
+$font-size-base: 1.25rem; // 20px — article reading size
+
+$headings-font-family: $font-family-serif;
+$headings-font-weight: 500;
 
 $spacer: 1rem;
 
-$font-family-word-mark: "Dynalight", "Domine", serif;
-
-$font-size-base: 1.25rem;
-$font-family-serif: "Domine", serif;
-$headings-font-family: $font-family-serif;
-
-// $body-text-align: "justify";
+$link-color: $primary;
 $link-decoration: none;
+$link-hover-decoration: none;
 
 $grid-gutter-width: 3rem;
 
-$line-height-base: 1.5;
-$paragraph-margin-bottom: 2rem;
+$line-height-base: 1.65;
+$paragraph-margin-bottom: 1.75rem;
 $hr-margin-y: $spacer * 2.75;
 
 $h1-font-size: $font-size-base * 2.25;
 
+// --- Radii (5 tags / 8 blocks / 12 cards / 14 modals / pill buttons) ---
+$border-radius: 8px;
+$border-radius-sm: 5px;
+$border-radius-lg: 12px;
+$border-radius-xl: 14px;
+$border-radius-pill: 999px;
+
 $navbar-dark-color: $body-bg;
 $navbar-dark-hover-color: $body-bg;
 $navbar-dark-active-color: $body-bg;
+
+$modal-content-border-radius: $border-radius-xl;

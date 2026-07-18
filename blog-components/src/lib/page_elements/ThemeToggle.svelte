@@ -27,10 +27,11 @@
   let preferenceIndex = $derived(validThemes.indexOf(preference));
   let nextIndex = $derived((preferenceIndex + 1) % validThemes.length);
 
-  let buttonIcon = $derived.by(() => {
-    if (preference === "auto") return "bi-circle-half";
-    if (preference === "light") return "bi-sun-fill";
-    return "bi-moon-fill";
+  // Glyph-as-label, per the design system: ☾ / ☀ / ◐ (auto)
+  let buttonGlyph = $derived.by(() => {
+    if (preference === "auto") return "◐";
+    if (preference === "light") return "☀";
+    return "☾";
   });
 
   onMount(() => {
@@ -73,12 +74,27 @@
 </script>
 
 <button
-  class="btn scale-80 rounded-circle p-2 lh-1 {resolvedTheme === 'dark'
-    ? 'btn-light'
-    : 'btn-dark'}"
+  class="theme-toggle"
   onclick={cyclePreference}
   aria-label="Theme preference: {preference}"
   title="Theme: {preference}"
 >
-  <i class="bi {buttonIcon} fs-4"></i>
+  {buttonGlyph}
 </button>
+
+<style>
+  .theme-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-ui, inherit);
+    transition: color 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--accent, currentColor);
+  }
+</style>

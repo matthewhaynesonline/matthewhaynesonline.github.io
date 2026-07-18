@@ -23,11 +23,6 @@
     threshold: 1.0,
   };
 
-  const inPageNavListClasses =
-    "in-page-nav-list list-unstyled border-start border-2 border-secondary mb-0";
-
-  const navLinkClasses = "nav-link px-3 py-2 text-truncate d-block";
-
   $effect(() => {
     const contentContainer = document.querySelector(contentSelector);
 
@@ -95,18 +90,13 @@
 {#if headings.length > 0}
   <nav class="in-page-nav-wrapper d-none d-md-block" aria-label={title}>
     {#if title}
-      <h6 class="in-page-nav-title">{title}</h6>
+      <div class="in-page-nav-title">{title}</div>
     {/if}
 
-    <ul class={inPageNavListClasses}>
+    <ul class="in-page-nav-list">
       {#each headings as { id, text, level }}
         <li class="nav-item level-{level}">
-          <a
-            href="#{id}"
-            class="{navLinkClasses} {activeId === id
-              ? 'active text-primary fw-bold border-start border-2 border-primary'
-              : 'text-light-emphasis'}"
-          >
+          <a href="#{id}" class="nav-link" class:active={activeId === id}>
             {text}
           </a>
         </li>
@@ -116,51 +106,58 @@
     <BackToTop scrollToTopCallback={reset} />
   </nav>
 
-  <div class="card d-block d-md-none">
-    <div class="card-body p-1">
-      <details bind:this={detailsElement}>
-        <summary
-          class="btn bg-transparent border-0 w-100 d-flex justify-content-between align-items-center"
-        >
-          <span class="mobile-nav-title">{title}</span>
-          <span class="mobile-nav-icon">▼</span>
-        </summary>
+  <div class="mobile-toc d-block d-md-none">
+    <details bind:this={detailsElement}>
+      <summary>
+        <span class="in-page-nav-title mobile-nav-title">{title}</span>
+        <span class="mobile-nav-icon">▾</span>
+      </summary>
 
-        <div class="mobile-nav-dropdown text-start mt-2">
-          <ul class={inPageNavListClasses}>
-            {#each headings as { id, text, level }}
-              <li class="nav-item level-{level}">
-                <a
-                  href="#{id}"
-                  class="{navLinkClasses} {activeId === id
-                    ? 'text-primary fw-bold'
-                    : ''}"
-                  onclick={handleMobileLinkClick}
-                >
-                  {text}
-                </a>
-              </li>
-            {/each}
-          </ul>
-        </div>
-      </details>
-    </div>
+      <div class="mobile-nav-dropdown">
+        <ul class="in-page-nav-list">
+          {#each headings as { id, text, level }}
+            <li class="nav-item level-{level}">
+              <a
+                href="#{id}"
+                class="nav-link"
+                class:active={activeId === id}
+                onclick={handleMobileLinkClick}
+              >
+                {text}
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </div>
+    </details>
   </div>
 {/if}
 
 <style>
   .in-page-nav-title {
-    font-size: 1rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint, #9b958c);
+    margin-bottom: 16px;
   }
 
   .in-page-nav-wrapper {
-    font-size: 0.9rem;
-    opacity: 0.25;
-    transition: all 300ms ease-out;
+    opacity: 0.6;
+    transition: opacity 300ms ease-out;
   }
 
   .in-page-nav-wrapper:hover {
     opacity: 1;
+  }
+
+  .in-page-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .nav-item.level-3 {
@@ -171,35 +168,71 @@
   }
 
   .nav-link {
-    margin-left: -2px;
+    display: block;
+    font-family: var(--font-mono, monospace);
+    font-size: 14px;
+    line-height: 1.45;
+    padding: 8px 0 8px 12px;
     border-left: 2px solid transparent;
+    color: var(--text-ui, #57544c);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .nav-link:hover {
-    color: var(--bs-primary) !important;
+    color: var(--accent, #c4362b);
   }
 
-  .mobile-nav-dropdown {
-    padding: 0.5rem 1rem;
-    max-height: 60vh;
-    overflow-y: auto;
+  .nav-link.active {
+    color: var(--accent, #c4362b);
+    border-left-color: var(--accent, #c4362b);
+  }
+
+  /* --- Mobile: tap-to-open disclosure --- */
+  .mobile-toc {
+    border: 1px solid var(--border-hairline, #ddd6c8);
+    border-radius: 9px;
+    padding: 14px 16px;
   }
 
   summary {
     list-style: none;
     outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
   }
 
   summary::-webkit-details-marker {
     display: none;
   }
 
+  .mobile-nav-title {
+    color: var(--text-ui, #57544c);
+    margin-bottom: 0;
+  }
+
   .mobile-nav-icon {
     display: inline-block;
+    color: var(--text-faint, #9b958c);
+    font-size: 13px;
     transition: transform 0.2s ease-in-out;
   }
 
   details[open] .mobile-nav-icon {
     transform: rotate(180deg);
+  }
+
+  .mobile-nav-dropdown {
+    text-align: left;
+    margin-top: 0.75rem;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 </style>

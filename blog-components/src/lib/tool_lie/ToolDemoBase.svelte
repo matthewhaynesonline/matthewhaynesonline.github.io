@@ -270,15 +270,10 @@
 </div>
 
 <style>
-  :global([data-bs-theme="light"]) .chat-card {
-    background: var(--bs-light);
-    /* border: 1px solid #d1d5db; */
-    /* box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); */
-  }
-
-  :global([data-bs-theme="dark"]) .chat-card {
-    background: var(--bs-dark);
-    /* border: 1px solid #2e3138; */
+  /* Warm raised surface from the editorial tokens; flips with the theme */
+  .chat-card {
+    background: var(--surface-raised, var(--bs-tertiary-bg));
+    border: 1px solid var(--border-hairline, var(--bs-border-color));
   }
 
   .chat-header-controls {
@@ -296,9 +291,8 @@
 
   .step-pip.active .pip-dot {
     background: var(--bs-primary);
-    /* background: #3b82f6; */
     transform: scale(1.35);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 3px rgba(196, 54, 43, 0.2);
   }
 
   .step-pip.done .pip-dot {

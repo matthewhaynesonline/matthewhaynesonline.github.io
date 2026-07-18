@@ -3,15 +3,9 @@
   {% include html_head.html %}
 
   <body class="home">
-    
-  <div class="container pt-2">
-    <div class="d-flex justify-content-end">
-      <div data-svelte-component="Search"></div>
-      <div data-svelte-component="ThemeToggle"></div>
-    </div>
-  </div>
+    {% include header.html masthead_class="masthead--home" hide_brand=true %}
 
-    {{content}}
+    {{ content }}
 
     {% include footer.html %}
   </body>

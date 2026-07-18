@@ -5,6 +5,7 @@ layout: none
   {% for post in site.posts %}
     {
       "title"    : "{{ post.title | strip_html | escape }}",
+      "kind"     : "Post",
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
       "url"      : "{{ site.baseurl }}{{ post.url }}",
@@ -15,6 +16,7 @@ layout: none
   {% for post in site.essays %}
     {
       "title"    : "{{ post.title | strip_html | escape }}",
+      "kind"     : "Essay",
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
       "url"      : "{{ site.baseurl }}{{ post.url }}",

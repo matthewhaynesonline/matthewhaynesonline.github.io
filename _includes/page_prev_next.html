@@ -1,22 +1,17 @@
-{% if page.previous %}
-<a
-  class="page-nav-link text-truncate"
-  href="{{ page.previous.url | relative_url }}"
->
-  <span class="fw-bold">Prev:</span> {{ page.previous.title }}
-</a>
-{% endif %} {% if page.next %}
-<a
-  class="page-nav-link text-truncate float-end d-none d-md-inline-block"
-  href="{{ page.next.url | relative_url }}"
->
-  <span class="fw-bold">Next:</span> {{ page.next.title }}
-</a>
+{% if page.previous or page.next %}
+<nav class="page-prev-next">
+  {% if page.previous %}
+  <a href="{{ page.previous.url | relative_url }}">
+    <span class="ppn-label">← Prev</span>
+    <span class="ppn-title">{{ page.previous.title }}</span>
+  </a>
+  {% endif %}
 
-<a
-  class="page-nav-link text-truncate d-block d-md-none"
-  href="{{ page.next.url | relative_url }}"
->
-  <span class="fw-bold">Next:</span> {{ page.next.title }}
-</a>
+  {% if page.next %}
+  <a class="ppn-next" href="{{ page.next.url | relative_url }}">
+    <span class="ppn-label">Next →</span>
+    <span class="ppn-title">{{ page.next.title }}</span>
+  </a>
+  {% endif %}
+</nav>
 {% endif %}

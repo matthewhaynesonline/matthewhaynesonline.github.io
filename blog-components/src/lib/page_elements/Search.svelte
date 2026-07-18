@@ -6,6 +6,7 @@
     title: string;
     url: string;
     date: string;
+    kind?: string;
     tags?: string[];
     excerpt?: string;
   }
@@ -75,13 +76,12 @@
 
 <svelte:window onkeydown={handleGlobalKeydown} />
 
-<button
-  class="search-trigger scale-80 btn btn-outline-secondary d-flex justify-content-between align-items-center bg-body text-muted w-100"
-  onclick={openModal}
-  aria-label="Open search"
->
-  <span><i class="bi bi-search me-2"></i>Search...</span>
-  <kbd class="bg-body-secondary border text-body text-decoration-none">⌘K</kbd>
+<button class="search-trigger" onclick={openModal} aria-label="Open search">
+  <span class="search-trigger-full">
+    Search
+    <kbd>⌘K</kbd>
+  </span>
+  <span class="search-trigger-glyph" aria-hidden="true">⌕</span>
 </button>
 
 {#if showModal}
@@ -100,14 +100,13 @@
       class="modal-dialog modal-dialog-scrollable modal-lg mt-5"
       onclick={(e) => e.stopPropagation()}
     >
-      <div class="modal-content shadow-lg border-0 overflow-hidden">
-        <div class="modal-header p-3 border-bottom d-flex align-items-center">
-          <i class="bi bi-search text-primary fs-5 me-3"></i>
+      <div class="modal-content search-modal">
+        <div class="search-modal-input">
+          <span class="search-modal-glyph" aria-hidden="true">⌕</span>
 
           <input
             use:autoFocus
             type="search"
-            class="form-control form-control-lg border-0 shadow-none px-0"
             bind:value={query}
             placeholder={isLoading ? "Loading index..." : "Search..."}
             disabled={isLoading}
@@ -115,48 +114,50 @@
 
           <button
             type="button"
-            class="btn-close modal-close-button"
+            class="search-modal-esc"
             aria-label="Close"
             onclick={closeModal}
-          ></button>
+          >
+            esc
+          </button>
         </div>
 
         {#if hasQuery}
-          <div class="modal-body p-0">
-            <div class="list-group list-group-flush">
-              {#each results as { item } (item.url)}
-                <a
-                  href={item.url}
-                  class="list-group-item list-group-item-action p-3"
-                  onclick={closeModal}
+          <div class="modal-body search-modal-results">
+            {#each results as { item } (item.url)}
+              <a href={item.url} class="search-result" onclick={closeModal}>
+                <span
+                  class="search-result-kind"
+                  class:search-result-kind--accent={item.kind === "Essay"}
                 >
-                  <div
-                    class="d-flex w-100 justify-content-between align-items-center"
-                  >
-                    <h6 class="mb-1 text-primary fw-bold">{item.title}</h6>
-                    <small class="text-body-secondary">{item.date}</small>
-                  </div>
+                  {item.kind || "Post"}
+                </span>
 
-                  {#if item.excerpt}
-                    <p class="mb-0 small text-body-secondary text-truncate">
-                      {item.excerpt}
-                    </p>
-                  {/if}
-                </a>
-              {:else}
-                <div class="p-5 text-center text-muted">
-                  <i class="bi bi-search fs-1 d-block mb-3 opacity-25"></i>
-                  No results found for "<strong>{query}</strong>"
-                </div>
-              {/each}
-            </div>
+                <span class="search-result-main">
+                  <span class="search-result-title">{item.title}</span>
+                  <span class="search-result-meta">{item.date}</span>
+                </span>
+
+                <span class="search-result-enter" aria-hidden="true">↵</span>
+              </a>
+            {:else}
+              <div class="search-no-results">
+                No results for “<strong>{query}</strong>”
+              </div>
+            {/each}
           </div>
         {/if}
 
-        <div
-          class="modal-footer bg-body-tertiary border-top-0 py-2 d-flex justify-content-start small text-muted"
-        >
-          <span><kbd class="me-1">esc</kbd> to close</span>
+        <div class="search-modal-footer">
+          <span><kbd>↵</kbd> open</span>
+          <span><kbd>esc</kbd> close</span>
+
+          {#if hasQuery}
+            <span class="search-modal-count">
+              {results.length}
+              {results.length === 1 ? "result" : "results"}
+            </span>
+          {/if}
         </div>
       </div>
     </div>
@@ -164,20 +165,235 @@
 {/if}
 
 <style>
+  /* --- Trigger --- */
   .search-trigger {
-    min-width: 180px;
-    max-width: 300px;
+    display: inline-flex;
+    align-items: center;
+    /* Frosted surface chip (same treatment as the essay-hero meta chips)
+       so the trigger stays legible over the smoky masthead / banner art. */
+    background: color-mix(in srgb, var(--surface, #f4f1ea) 62%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-ui, #57544c);
+    border: 1px solid var(--border-control, #cfc8ba);
+    border-radius: 7px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
-  /* Strip out the heavy default blue glow from the modal input */
-  .modal-header input:focus {
-    box-shadow: none;
+  .search-trigger:hover {
+    color: var(--text-strong, inherit);
+    border-color: var(--text-strong, currentColor);
+  }
+
+  .search-trigger-full {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-trigger kbd {
+    background: transparent;
+    border: 1px solid var(--border-control, #cfc8ba);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 10px;
+    font-family: inherit;
+    color: inherit;
+  }
+
+  .search-trigger-glyph {
+    display: none;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  @media (max-width: 575px) {
+    .search-trigger {
+      border: 0;
+      padding: 4px 6px;
+      color: var(--text-ui, #57544c);
+    }
+
+    .search-trigger-full {
+      display: none;
+    }
+
+    .search-trigger-glyph {
+      display: inline;
+    }
+  }
+
+  /* --- Modal --- */
+  .search-modal {
+    background: var(--surface, #f4f1ea);
+    border: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-pop, 0 30px 70px -20px rgba(0, 0, 0, 0.55));
+  }
+
+  .search-modal-input {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-hairline, #ddd6c8);
+  }
+
+  .search-modal-glyph {
+    font-size: 19px;
+    color: var(--text-faint, #9b958c);
+  }
+
+  .search-modal-input input {
+    flex: 1;
+    border: 0;
     outline: none;
+    background: transparent;
+    font-family: var(--font-body, serif);
+    font-size: 22px;
+    color: var(--text-strong, inherit);
+    caret-color: var(--accent, #c4362b);
   }
 
-  /* Prevent modal X and search input X from appearing right next to each other */
-  .modal-close-button {
-    position: relative;
-    bottom: 20px;
+  .search-modal-input input::placeholder {
+    color: var(--text-faint, #9b958c);
+  }
+
+  .search-modal-esc {
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint, #9b958c);
+    border: 1px solid var(--border-control, #cfc8ba);
+    border-radius: 5px;
+    padding: 4px 8px;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .search-modal-esc:hover {
+    color: var(--text-strong, inherit);
+    border-color: var(--text-strong, currentColor);
+  }
+
+  /* --- Results --- */
+  .search-modal-results {
+    padding: 14px 12px 8px;
+  }
+
+  .search-result {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .search-result:hover {
+    background: var(--surface-raised, #efe9dd);
+  }
+
+  .search-result-kind {
+    font-family: var(--font-mono, monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted, #76716a);
+    border: 1px solid var(--border-control, #cfc8ba);
+    border-radius: 4px;
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+
+  .search-result-kind--accent {
+    color: var(--accent, #c4362b);
+    border-color: var(--accent, #c4362b);
+  }
+
+  .search-result-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-result-title {
+    display: block;
+    font-family: var(--font-body, serif);
+    font-size: 18px;
+    color: var(--text-strong, inherit);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .search-result:hover .search-result-title {
+    color: var(--accent, #c4362b);
+  }
+
+  .search-result-meta {
+    display: block;
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    color: var(--text-faint, #9b958c);
+    margin-top: 3px;
+  }
+
+  .search-result-enter {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    color: var(--text-faint, #9b958c);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .search-result:hover .search-result-enter {
+    opacity: 1;
+  }
+
+  .search-no-results {
+    padding: 40px 20px;
+    text-align: center;
+    font-style: italic;
+    color: var(--text-muted, #76716a);
+  }
+
+  /* --- Footer hints --- */
+  .search-modal-footer {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-hairline, #ddd6c8);
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted, #76716a);
+  }
+
+  .search-modal-footer kbd {
+    background: transparent;
+    color: var(--text-strong, inherit);
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+  }
+
+  .search-modal-count {
+    margin-left: auto;
+    color: var(--text-faint, #9b958c);
   }
 </style>

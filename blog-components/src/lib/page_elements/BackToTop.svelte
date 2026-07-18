@@ -16,21 +16,22 @@
   }
 </script>
 
-<a
-  class="back-to-top text-light-emphasis mt-3 d-block"
-  href="#top"
-  onclick={scrollToTop}
->
-  ↑ Back to top
-</a>
+<a class="back-to-top" href="#top" onclick={scrollToTop}> ↑ Back to top </a>
 
 <style>
   .back-to-top {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     text-decoration: none;
-    transition: color 0.2s ease;
+    color: var(--text-muted, #76716a);
+    transition: color 0.15s ease;
   }
 
   .back-to-top:hover {
-    text-decoration: underline;
+    color: var(--accent, #c4362b);
   }
 </style>

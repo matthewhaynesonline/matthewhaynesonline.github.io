@@ -1,22 +1,23 @@
 /* Nightfall — Rouge/Jekyll syntax theme for SCSS (custom) */
 
 :root {
-  --highlight-bg: rgb(26, 30, 34); /* darker tint vs page bg */
-  --highlight-line-hl: rgb(22, 26, 30);
-  --highlight-text: #cdd6f4;
-  --highlight-muted: #5c6e82;
-  --highlight-comment: #607a8f;
-  --highlight-keyword: #c792ea;
-  --highlight-operator: #f07178;
-  --highlight-function: #89dceb;
-  --highlight-string: #a6da95;
-  --highlight-number: #fab387;
-  --highlight-constant: #fab387;
-  --highlight-builtin: #89b4fa;
-  --highlight-decorator: #f5c2e7;
-  --highlight-exception: #f38ba8;
-  --highlight-tag: #f07178;
-  --highlight-punct: #abb2bf;
+  /* Warm ink, matching the Studio Haynes editorial palette */
+  --highlight-bg: #1c1b19;
+  --highlight-line-hl: #262420;
+  --highlight-text: #e6e1d6;
+  --highlight-muted: #6f6a5e;
+  --highlight-comment: #8a8375;
+  --highlight-keyword: #d98c4a;
+  --highlight-operator: #d98c4a;
+  --highlight-function: #7fb0d6;
+  --highlight-string: #c98f6a;
+  --highlight-number: #94b86a;
+  --highlight-constant: #94b86a;
+  --highlight-builtin: #94b86a;
+  --highlight-decorator: #dfb95e;
+  --highlight-exception: #df5247;
+  --highlight-tag: #d98c4a;
+  --highlight-punct: #b8b1a1;
   --highlight-error-fg: #ff6b6b;
   --highlight-error-bg: #2a1a1a;
   --highlight-diff-del: #f38ba8;

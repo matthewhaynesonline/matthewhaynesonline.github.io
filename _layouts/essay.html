@@ -2,29 +2,81 @@
 <html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
   {% include html_head.html %}
   <body class="essay">
+    {% assign words = page.content | strip_html | number_of_words %}
+    {% assign read_time = words | divided_by: 200 %}
+    {% if read_time < 1 %}{% assign read_time = 1 %}{% endif %}
 
-    <nav data-bs-theme="light">
-  <div class="container-fluid">
-    <div class="d-flex align-items-center justify-content-between">
-      <a class="home-link text-body-emphasis word-mark-font" href="/">MH</a>
-      <div data-svelte-component="ThemeToggle"></div>
-    </div>
-  </div>
-  </nav>
+    {% assign essay_no = 1 %}
+    {% for essay in site.essays %}
+      {% if essay.url == page.url %}{% assign essay_no = forloop.index %}{% endif %}
+    {% endfor %}
+    {% if essay_no < 10 %}
+      {% capture essay_no_padded %}0{{ essay_no }}{% endcapture %}
+    {% else %}
+      {% assign essay_no_padded = essay_no %}
+    {% endif %}
 
-  <div class="banner">
-    <img src="{{ page.banner_img }}" alt="Banner img" />
-
-    <div class="banner-text">
-      <h1 >{{ page.title }}</h1>
-
-        <h4 class="text-body-tertiary">
-          <small> {{ page.date | date: "%b %d, %Y" }} </small>
-        </h4>
+    {% capture nameplate %}
+    <div class="nameplate">
+      <div class="nameplate-top">
+        <span>Essay</span>
+        <span>No. {{ essay_no_padded }} · {{ page.date | date: "%b %Y" }}</span>
       </div>
-  </div>
 
-    {% include two_column_content.html show_title=false container_class="container-fluid main-container mt-2" %}
+      <div class="nameplate-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+
+      <p class="nameplate-dek">{{ page.excerpt | strip_html | strip_newlines }}</p>
+
+      <div class="nameplate-meta">{{ read_time }} min read</div>
+    </div>
+    {% endcapture %}
+
+    {% if page.banner_img %}
+    <div class="essay-hero">
+      <div class="essay-hero-img">
+        <img src="{{ page.banner_img }}" alt="" />
+      </div>
+
+      {% include header.html masthead_class="masthead--smoke position-relative z-1" %}
+
+      <div class="essay-hero-title">
+        {{ nameplate }}
+      </div>
+    </div>
+    {% else %}
+    {% include header.html %}
+
+    <div class="page-frame" style="padding-top: 72px;">
+      {{ nameplate }}
+    </div>
+    {% endif %}
+
+    <div class="container-fluid main-container mt-2">
+      <div class="row page-layout">
+        <div class="col-12 col-md-4 col-lg-3 mb-4">
+          <div id="in-page-nav" data-svelte-component="InPageNav"></div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9 d-flex justify-content-center">
+          <div id="main-content">
+            <div class="essay-body">
+              {% comment %} The excerpt is the dek, already shown in the nameplate. {% endcomment %}
+              {{ content | replace_first: page.excerpt, "" }}
+            </div>
+
+            <div class="essay-signoff">
+              <div class="essay-signoff-name t-signature">{{ site.author.name }}</div>
+              <div class="essay-signoff-meta">{{ page.date | date: "%b %d, %Y" }}</div>
+            </div>
+
+            <div class="mb-3" data-svelte-component="BackToTop"></div>
+            {% include page_prev_next.html %}
+          </div>
+        </div>
+      </div>
+    </div>
 
     {% include footer.html %}
   </body>
