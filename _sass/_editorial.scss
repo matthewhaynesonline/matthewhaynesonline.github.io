@@ -680,6 +680,51 @@
   }
 }
 
+// =============================================================================
+// Chat transcript — a Teams/IRC exchange quoted inside a post.
+// Markup stays plain kramdown: a bold speaker-initial paragraph followed by a
+// blockquote per message. This class rescales the post's pull-quote blockquote
+// voice into a compact transcript so the dialogue reads as chat, not epigraphs.
+// =============================================================================
+.article-body .chat-log {
+  margin: 36px 0;
+
+  // Speaker label: the site's mono-caps UI voice
+  > p {
+    margin: 0 0 6px;
+
+    > strong {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  }
+
+  // Message: compact upright body text, hairline rule instead of the accent bar
+  blockquote {
+    margin: 0 0 22px;
+    padding: 2px 0 2px 16px;
+    border-left: 2px solid var(--border-control);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    font-style: normal;
+    color: var(--text-body);
+    letter-spacing: 0;
+
+    p + p {
+      margin-top: 0.6rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 // Watch / Code callout cards
 .callout-cards {
   display: flex;
