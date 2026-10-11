@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--
+  Recording stage — a chrome-free 16:9 surface for capturing a single blog
+  component on video. Pick the component with ?c=Name (or the top-left picker);
+  the page mounts it centered on a clean stage with no masthead or footer.
+
+  Query params (all optional):
+    c=WatermarkGreenList   component to mount (must be registered in main.ts)
+    theme=light|dark|auto  force a theme (default: site/system preference)
+    bg=surface|paper|white|black|dark|transparent|<css color>   stage background
+    fit=contain|fixed      contain (default) fills the viewport 16:9; fixed = exact px
+    w=1280                 stage width in px when fit=fixed (height follows 16:9)
+    pad=48                 inner padding around the component, px
+    max=820                max width of the component column, px
+    letterbox=<css color>  frame color around the stage (default near-black)
+    valign=top|center      top (default) keeps the component's top edge fixed as it grows
+  Any other param is passed to the component as a data-* prop.
+
+  Keys while composing: move mouse to show controls · H to hide them entirely.
+-->
+<html lang="{{ site.lang | default: "en-US" }}" data-bs-theme="auto">
+  {% include html_head.html %}
+  <body class="rec-body">
+    <div class="rec-letterbox" id="rec-letterbox">
+      <div class="rec-stage" id="rec-stage">
+        <div class="rec-stage-inner" id="rec-mount"></div>
+      </div>
+    </div>
+
+    <div class="rec-controls rec-force-hidden" id="rec-controls"></div>
+
+    <style>
+      .rec-body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .rec-letterbox {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #0e0e0e;
+      }
+
+      /* fit=fixed can exceed the viewport; let the frame scroll to it. */
+      .rec-letterbox.rec-scroll {
+        overflow: auto;
+      }
+
+      /* Top-anchored so a component growing (reveal, next step) never shifts
+         its top edge mid-recording. ?valign=center restores centering. */
+      .rec-stage {
+        aspect-ratio: 16 / 9;
+        width: min(100vw, calc(100vh * 16 / 9));
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--surface);
+      }
+
+      .rec-stage.rec-center {
+        align-items: center;
+      }
+
+      .rec-stage-inner {
+        width: 100%;
+        max-width: 820px;
+        padding: 48px;
+        box-sizing: border-box;
+      }
+
+      .rec-empty {
+        text-align: center;
+        font-family: var(--font-body, Georgia, serif);
+        font-size: 1.15rem;
+        color: var(--text-muted, #888);
+      }
+
+      .rec-controls {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+        padding: 0.5rem 0.8rem;
+        background: rgba(18, 18, 18, 0.88);
+        backdrop-filter: blur(6px);
+        border-bottom-right-radius: 12px;
+        font-family: var(--font-mono, ui-monospace, monospace);
+        font-size: 0.8rem;
+        color: #ededed;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .rec-controls.rec-hidden {
+        opacity: 0;
+        transform: translateY(-100%);
+        pointer-events: none;
+      }
+
+      .rec-controls.rec-force-hidden {
+        display: none;
+      }
+
+      .rec-controls label {
+        color: #9a9a9a;
+        margin-right: 0.25rem;
+      }
+
+      .rec-field {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .rec-controls select,
+      .rec-controls input {
+        font: inherit;
+        background: #232323;
+        color: #ededed;
+        border: 1px solid #444;
+        border-radius: 6px;
+        padding: 0.15rem 0.35rem;
+      }
+
+      .rec-controls input {
+        width: 5rem;
+      }
+
+      .rec-hint {
+        color: #6f6f6f;
+      }
+    </style>
+
+    <!--
+      Classic (non-module) script: runs during parse, so the mount div exists
+      before the deferred bundle module scans for [data-svelte-component] on
+      DOMContentLoaded. The control panel is built later, once the bundle has
+      published window.__SVELTE_COMPONENTS__.
+    -->
+    <script>
+      (function () {
+        var params = new URLSearchParams(location.search);
+        var RESERVED = {
+          c: 1, theme: 1, bg: 1, fit: 1, w: 1, pad: 1, max: 1, letterbox: 1, valign: 1,
+        };
+
+        var stage = document.getElementById("rec-stage");
+        var frame = document.getElementById("rec-letterbox");
+        var mount = document.getElementById("rec-mount");
+
+        // --- theme override ---
+        var theme = params.get("theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.setAttribute("data-bs-theme", theme);
+        } else if (theme === "auto") {
+          var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
+        }
+
+        // --- background + framing ---
+        var BG = {
+          surface: "var(--surface)",
+          paper: "var(--paper)",
+          white: "#ffffff",
+          black: "#000000",
+          dark: "var(--dark-bg)",
+          transparent: "transparent",
+        };
+        var bgKey = params.get("bg") || "surface";
+        stage.style.background = BG[bgKey] || bgKey;
+        frame.style.background = params.get("letterbox") || "#0e0e0e";
+
+        if (params.get("valign") === "center") stage.classList.add("rec-center");
+
+        var pad = params.get("pad");
+        var max = params.get("max");
+        if (pad) mount.style.padding = /^\d+$/.test(pad) ? pad + "px" : pad;
+        if (max) mount.style.maxWidth = /^\d+$/.test(max) ? max + "px" : max;
+
+        // --- fit: contain (viewport 16:9) or fixed (exact px) ---
+        if ((params.get("fit") || "contain") === "fixed") {
+          var w = parseInt(params.get("w") || "1280", 10);
+          stage.style.width = w + "px";
+          stage.style.height = Math.round((w * 9) / 16) + "px";
+          frame.classList.add("rec-scroll");
+        }
+
+        // --- mount the chosen component (or a prompt) ---
+        var name = params.get("c");
+        if (name) {
+          var el = document.createElement("div");
+          el.setAttribute("data-svelte-component", name);
+          params.forEach(function (value, key) {
+            if (!RESERVED[key]) el.dataset[key] = value;
+          });
+          mount.appendChild(el);
+        } else {
+          mount.innerHTML =
+            '<div class="rec-empty">Pick a component in the top-left panel ↖</div>';
+        }
+
+        // Update one query param and reload — a clean remount every time.
+        function setParam(key, value) {
+          var u = new URL(location.href);
+          if (value === null || value === "") u.searchParams.delete(key);
+          else u.searchParams.set(key, value);
+          location.href = u.toString();
+        }
+
+        function option(value, label, selected) {
+          return (
+            '<option value="' + value + '"' +
+            (value === selected ? " selected" : "") +
+            ">" + label + "</option>"
+          );
+        }
+
+        function buildControls() {
+          var controls = document.getElementById("rec-controls");
+          var registry = window.__SVELTE_COMPONENTS__ || [];
+
+          var compOpts = registry.length
+            ? registry.map(function (n) { return option(n, n, name || ""); }).join("")
+            : option("", "(rebuild bundle to list components)", "");
+
+          var themeSel = theme || "auto";
+          var fitSel = params.get("fit") || "contain";
+          var valignSel = params.get("valign") === "center" ? "center" : "top";
+
+          controls.innerHTML =
+            '<span class="rec-field"><label>component</label>' +
+            '<select id="rc-c">' + option("", "—", name || "") + compOpts + "</select></span>" +
+            '<span class="rec-field"><label>theme</label><select id="rc-theme">' +
+              option("auto", "auto", themeSel) + option("light", "light", themeSel) + option("dark", "dark", themeSel) +
+            "</select></span>" +
+            '<span class="rec-field"><label>bg</label><select id="rc-bg">' +
+              ["surface", "paper", "white", "black", "dark", "transparent"]
+                .map(function (b) { return option(b, b, bgKey); }).join("") +
+            "</select></span>" +
+            '<span class="rec-field"><label>fit</label><select id="rc-fit">' +
+              option("contain", "contain", fitSel) + option("fixed", "fixed", fitSel) +
+            "</select></span>" +
+            '<span class="rec-field"><label>align</label><select id="rc-valign">' +
+              option("top", "top", valignSel) + option("center", "center", valignSel) +
+            "</select></span>" +
+            '<span class="rec-hint">move mouse shows · H hides</span>';
+
+          document.getElementById("rc-c").onchange = function () { setParam("c", this.value); };
+          document.getElementById("rc-theme").onchange = function () { setParam("theme", this.value); };
+          document.getElementById("rc-bg").onchange = function () { setParam("bg", this.value); };
+          document.getElementById("rc-fit").onchange = function () { setParam("fit", this.value); };
+          document.getElementById("rc-valign").onchange = function () { setParam("valign", this.value); };
+
+          controls.classList.remove("rec-force-hidden");
+        }
+
+        // Auto-hide the panel on idle so it never bleeds into a recording.
+        function setupAutoHide() {
+          var controls = document.getElementById("rec-controls");
+          var timer;
+          function show() {
+            controls.classList.remove("rec-hidden");
+            clearTimeout(timer);
+            timer = setTimeout(function () { controls.classList.add("rec-hidden"); }, 2500);
+          }
+          document.addEventListener("mousemove", show);
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "h" || e.key === "H") controls.classList.toggle("rec-force-hidden");
+          });
+          show();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          buildControls();
+          setupAutoHide();
+        });
+      })();
+    </script>
+  </body>
+</html>

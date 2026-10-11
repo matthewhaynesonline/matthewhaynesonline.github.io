@@ -9,4 +9,4 @@ vite:
 	cd blog-components && npm install && npx vite build --watch
 
 jekyll:
-	bundle exec jekyll serve
+	bundle exec jekyll serve --unpublished

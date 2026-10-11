@@ -17,6 +17,19 @@ import AxiomValueSystems from "./lib/axiom_viz/app/ValueSystems.svelte";
 import ToolDemoAddSub from "./lib/tool_lie/ToolDemoAddSub.svelte";
 import ToolDemoDialog from "./lib/tool_lie/ToolDemoDialog.svelte";
 
+import WatermarkZeroWidth from "./lib/watermark/ZeroWidthReveal.svelte";
+import WatermarkHomoglyph from "./lib/watermark/HomoglyphReveal.svelte";
+import WatermarkGreenList from "./lib/watermark/WatermarkGreenList.svelte";
+import WatermarkDetection from "./lib/watermark/WatermarkDetection.svelte";
+import SynthIDTournament from "./lib/watermark/SynthIDTournament.svelte";
+import GreenVsTournament from "./lib/watermark/GreenVsTournament.svelte";
+import SynthIDQuality from "./lib/watermark/SynthIDQuality.svelte";
+import SynthIDPassage from "./lib/watermark/SynthIDPassage.svelte";
+import SynthIDDetection from "./lib/watermark/SynthIDDetection.svelte";
+import PangramMirrorMining from "./lib/watermark/PangramMirrorMining.svelte";
+
+import Blockchain from "./lib/blockchain/Blockchain.svelte";
+
 const components = {
   InPageNav,
   Search,
@@ -31,7 +44,23 @@ const components = {
   AxiomValueSystems,
   ToolDemoAddSub,
   ToolDemoDialog,
+  WatermarkZeroWidth,
+  WatermarkHomoglyph,
+  WatermarkGreenList,
+  WatermarkDetection,
+  SynthIDTournament,
+  GreenVsTournament,
+  SynthIDQuality,
+  SynthIDPassage,
+  SynthIDDetection,
+  PangramMirrorMining,
+  Blockchain,
 };
+
+// Publish the registered names so the /record/ recording stage can build its
+// component picker from this single source of truth instead of a hand-kept copy.
+(window as unknown as { __SVELTE_COMPONENTS__?: string[] }).__SVELTE_COMPONENTS__ =
+  Object.keys(components);
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const componentTargetElements = document.querySelectorAll(

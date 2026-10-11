@@ -15,4 +15,4 @@ vendor/cache/
 # Svelte
 assets/dist/
 
-.local/*
+/.local
