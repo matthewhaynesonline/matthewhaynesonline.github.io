@@ -61,7 +61,7 @@ This started the way most bad things do: Microsoft Teams.
 
 </div>
 
-"I feel like there's a video here." How prescient : )
+"I feel like there's a video here." How prescient :
 
 {% include yt_embed.html %}
 

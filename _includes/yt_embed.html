@@ -17,13 +17,13 @@
     allowfullscreen
   ></iframe>
 </div>
-{% endif%} {% if page.yt_id && page.gh_url %}
+{% endif%} {% if page.yt_id %}
 <p>
   <em>
     This is a companion to the
     <a href="https://youtu.be/{{ page.yt_id }}">YouTube video</a> for those who
-    prefer reading over watching. Code available on
-    <a href="{{ page.gh_url }}">GitHub</a>.
+    prefer reading over watching.{% if page.gh_url %} Code available on
+    <a href="{{ page.gh_url }}">GitHub</a>.{% endif %}
   </em>
 </p>
 {% endif%}
