@@ -32,8 +32,10 @@
 
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
 
-    <link rel="stylesheet" href="{{ "/assets/dist/bundle.css" | relative_url }}">
-    <script type="module" src="{{ "/assets/dist/bundle.js" | relative_url }}"></script>
+    {% comment %} Build-time version busts Cloudflare's 4h cache of these fixed URLs on each deploy. {% endcomment %}
+    {% assign bundle_version = site.time | date: '%s' %}
+    <link rel="stylesheet" href="{{ "/assets/dist/bundle.css" | relative_url }}?v={{ bundle_version }}">
+    <script type="module" src="{{ "/assets/dist/bundle.js" | relative_url }}?v={{ bundle_version }}"></script>
 
     <script>
       // For light / dark toggle to share between FOUC fix and component
