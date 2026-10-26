@@ -11,6 +11,21 @@ gh_url: "https://github.com/matthewhaynesonline/crap-public"
 
 <!--more-->
 
+<div class="card text-bg-callout mb-4">
+  <div class="card-body">
+    <p class="card-text">
+    <a href="https://huggingface.co/collections/matthewhaynesonline/crap11"><strong>Update: CRAP 1.1 is out!</strong></a> New weights, a technical report and a browser demo, so you can now watch a language model skip the compiler without installing anything. It's still useless, but now it's useless <em>in your browser</em>.
+    </p>
+    <ul class="mb-0">
+      <li><a href="https://huggingface.co/spaces/matthewhaynesonline/crap-demo">CRAPPED browser demo</a></li>
+      <li><a href="https://github.com/matthewhaynesonline/crap-public/blob/main/paper/paper.pdf">Technical report (PDF)</a></li>
+      <li><a href="https://huggingface.co/collections/matthewhaynesonline/crap11">v1.1 Collection</a></li>
+      <li><a href="https://huggingface.co/matthewhaynesonline/gemma-4-E2B-it-crap-1.1">Merged weights (v1.1)</a> and <a href="https://huggingface.co/matthewhaynesonline/gemma-4-E2B-it-crap-1.1-gguf">GGUF quants (v1.1)</a></li>
+      <li><a href="https://github.com/matthewhaynesonline/crap-public">Code on GitHub</a></li>
+    </ul>
+  </div>
+</div>
+
 This started the way most bad things do: Microsoft Teams.
 
 <div class="chat-log ps-5" markdown="1">
